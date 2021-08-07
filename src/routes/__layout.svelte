@@ -36,3 +36,10 @@
 		<slot></slot>
 	</div>
 </div>
+
+<style>
+	*::selection {
+		background: var(--color-complement);
+		color: var(--color-primary);
+	}
+</style>
