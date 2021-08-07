@@ -6,14 +6,14 @@
 
   let ref: HTMLElement
   let colorPicker: iro.ColorPicker
-  export let value: string
+  export let color: chroma.Color
 
-  $: if (value && colorPicker) {
-    colorPicker.color.hexString = value
-    // colorPicker.color.hexString = chroma(value).hex()
+  $: if (color && colorPicker) {
+    colorPicker.color.hexString = color.hex()
+    // colorPicker.color.hexString = chroma(color).hex()
   }
 
-  const dispatch = createEventDispatcher<{ change: { value: string }}>();
+  const dispatch = createEventDispatcher<{ change: { color: chroma.Color }}>();
 
   onMount(() => {
     // @ts-ignore
@@ -31,20 +31,20 @@
         { 
           component: iro.ui.Slider,
           options: {
-            // can also be 'saturation', 'value', 'red', 'green', 'blue', 'alpha' or 'kelvin'
+            // can also be 'saturation', 'color', 'red', 'green', 'blue', 'alpha' or 'kelvin'
             sliderType: 'hue'
           }
         },
       ]
     });
 
-    colorPicker.on('color:change', function(color: iro.Color) {
-      value = color.hexString
+    colorPicker.on('color:change', function(newColor: iro.Color) {
+      color = chroma(newColor.hexString)
     });
     
-    colorPicker.on('input:end', function(color: iro.Color) {
+    colorPicker.on('input:end', function(newColor: iro.Color) {
       dispatch('change', {
-        value: color.hexString
+        color: chroma(newColor.hexString)
       })
     });
   })
