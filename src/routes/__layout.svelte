@@ -22,7 +22,7 @@
     <div
 			class="px-10 py-6 flex justify-center items-center relative"
 		>
-			<h1 class="text-3xl font-medium absolute left-10 text-primary-clamped">hue.tools</h1>
+			<a href="/" class="text-3xl font-medium absolute left-10 text-primary-clamped">hue.tools</a>
 
 			<div class="flex items-center space-x-4 text-xl font-medium">
 				<a href="/" class="{$page.path === '/' ? 'text-primary-clamped' : ''}">Mix</a>
