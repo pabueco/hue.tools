@@ -6,8 +6,12 @@
 	import ColorBlock from '../components/ColorBlock.svelte';
 	import { primaryColor } from '../store';
 	import ColorCard from '$components/ColorCard.svelte';
+  import { page } from '$app/stores';
 
-	let colorInstance: chroma.Color = chroma.random();
+  let queryColor = $page.query.get('color')
+
+	let colorInstance: chroma.Color = queryColor ? chroma(queryColor) : chroma.random();
+  let initialFormat = queryColor ? new TinyColor(queryColor).format : 'hex'
 
 	$: $primaryColor = colorInstance;
 
@@ -18,7 +22,7 @@
 	<div class="container mx-auto max-w-6xl">
 		<div class="flex">
 			<div class="w-80 flex-1 flex flex-col">
-				<ColorCard bind:color={colorInstance} />
+				<ColorCard bind:color={colorInstance} initialFormat={initialFormat} />
 			</div>
 			<div class="ml-10 text-lg w-80">
 				<Fieldset label="Color Spaces">

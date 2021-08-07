@@ -11,14 +11,14 @@
 
 	export let color: chroma.Color;
   export let deletable: boolean = false;
+  export let initialFormat: string;
 
 	let isColorPickerVisible = false;
 
 	let colorInput: string;
 	let colorName: string;
 
-  let inputFormat: ColorFormats;
-
+  let inputFormat: ColorFormats = (initialFormat as ColorFormats) || 'hex';
 
 	$: textColor = mostReadable(color.hex(), ['#fff', '#000']).toHexString();
 
