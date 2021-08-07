@@ -1,0 +1,22 @@
+@tailwind base;
+/* Write your global styles here, in PostCSS syntax */
+@tailwind components;
+@tailwind utilities;
+
+.IroSliderGradient, .IroBox > .IroBox {
+  border-radius: 4px !important;
+}
+
+:root {
+  --toastMsgPadding: 0.75rem 1.5rem;
+
+  --toastContainerTop: auto;
+  --toastContainerRight: auto;
+  --toastContainerBottom: 4rem;
+  --toastContainerLeft: 4rem;
+
+  --toastBackground: theme('colors.gray.700');
+  --toastBorderRadius: theme('borderRadius.2xl');
+
+  --toastProgressBackground: transparent;
+}
