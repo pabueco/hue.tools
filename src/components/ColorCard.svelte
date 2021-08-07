@@ -42,13 +42,13 @@
 	style="color: {textColor}; background-color: {color.hex?.()}; box-shadow: 0 10px 30px -10px {color
 		.alpha(0.75)
 		.css()}"
-	class="relative transition rounded-2xl p-4 flex-1 flex flex-col justify-end cursor-pointer"
+	class="relative transition rounded-2xl p-4 flex-1 flex flex-col justify-end cursor-pointer group"
 >
 
   {#if deletable}
 
     <button
-      class="absolute z-20 top-3 right-3 block opacity-40 hover:opacity-100 transition"
+      class="absolute z-20 top-5 right-5 block opacity-40 hover:opacity-100 transition"
       on:click={() => dispatch('delete')}
     >
       <svg
@@ -68,43 +68,34 @@
   {/if}
 
 	<div
-		class="absolute top-5 text-lg font-medium opacity-80 inset-x-0 text-center"
+		class="absolute top-4 text-lg font-medium opacity-80 inset-x-0 text-center"
 		style="color: {textColor};"
 	>
 		{colorName}
 	</div>
 
-	{#if isColorPickerVisible}
-		<div
-			class="bg-black text-white bg-opacity-75 rounded-xl p-5 flex justify-center items-center mb-5 shadow-lg"
-		>
-			<ColorPicker bind:color={color} on:change={findColorName} />
-		</div>
-	{/if}
-	<button
-		class="absolute left-5 bottom-5"
-		on:click={() => (isColorPickerVisible = !isColorPickerVisible)}
-	>
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			class="h-5 w-5"
-			fill="none"
-			viewBox="0 0 24 24"
-			stroke="currentColor"
-		>
-			<path
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				stroke-width="2"
-				d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
-			/>
-		</svg>
-	</button>
-	<input
-		type="text"
-		value={color.hex()}
-		class="text-center font-semibold text-xl bg-transparent focus:outline-none w-full min-w-0"
-		on:blur={(e) => onColorInput(e)}
-		on:keyup={(e) => e.key === 'Enter' && onColorInput(e)}
-	/>
+  <button
+    class="absolute left-5 top-5 opacity-70 group-hover:opacity-100 transition"
+    on:click={() => (isColorPickerVisible = !isColorPickerVisible)}
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
+    </svg>
+  </button>
+
+	<div class="bg-black bg-opacity-25 text-white hover:bg-opacity-50 focus:bg-opacity-50 rounded-3xl transition mt-12 {isColorPickerVisible ? 'bg-opacity-50' : ''}">
+    {#if isColorPickerVisible}
+      <div class="w-full flex justify-center pt-8 mb-5">
+        <ColorPicker bind:color={color} on:change={findColorName} />
+      </div>
+    {/if}
+    
+    <input
+      type="text"
+      value={color.hex()}
+      class="transition text-center font-semibold text-lg tracking-wider bg-transparent focus:outline-none w-full min-w-0 h-12 rounded-full"
+      on:blur={(e) => onColorInput(e)}
+      on:keyup={(e) => e.key === 'Enter' && onColorInput(e)}
+    />
+  </div>
 </div>
