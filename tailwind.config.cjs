@@ -11,8 +11,9 @@ const config = {
       colors: {
         gray: colors.trueGray,
 
-        curr: {
-          DEFAULT: 'var(--color-current)'
+        primary: {
+          DEFAULT: 'var(--color-primary)',
+          clamped: 'var(--color-primary-clamped)',
         }
       },
 

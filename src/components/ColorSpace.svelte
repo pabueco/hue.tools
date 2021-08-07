@@ -12,7 +12,7 @@
   <div class="mr-2 font-medium text-gray-400 w-16 text-base tracking-wider whitespace-nowrap">
     {label}
   </div>
-  <div class="tabular-nums text-xl font-medium cursor-pointer text-gray-100 hover:text-curr transition" on:click={() => copyToClipboard(formattedValue)}>
+  <div class="tabular-nums text-xl font-medium cursor-pointer text-gray-100 hover:text-primary-clamped transition" on:click={() => copyToClipboard(formattedValue)}>
     <slot>{formattedValue}</slot>
   </div>
 </div>

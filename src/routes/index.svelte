@@ -8,8 +8,8 @@
 
 	import ColorPicker from '../components/ColorPicker.svelte';
 	import { copyToClipboard } from '../utils/clipboard';
-	import { currentColor } from '../store';
-import ColorCard from '$src/components/ColorCard.svelte';
+	import { primaryColor } from '../store';
+	import ColorCard from '$src/components/ColorCard.svelte';
 
 	let colorInstances: chroma.Color[] = [chroma.random(), chroma.random()];
 
@@ -22,11 +22,8 @@ import ColorCard from '$src/components/ColorCard.svelte';
 
 	$: averageColor = chroma.average(colorInstances, 'lch');
 	$: averageColorText = mostReadable(averageColor.hex(), ['#fff', '#000']).toHexString();
-	$: averageColorComplement = new TinyColor(averageColor.hex()).complement().toHexString();
 
-	$: averageColorClamped = averageColor.luminance(0.5).saturate(2.5);
-
-	$: $currentColor = averageColor.hex();
+	$: $primaryColor = averageColor;
 
 	$: gradient = colorSteps.join(', ');
 
@@ -39,17 +36,16 @@ import ColorCard from '$src/components/ColorCard.svelte';
 		colorInstances = colorInstances;
 	};
 
-  const decreaseStepCount = () => {
-    if (stepsCount > colorInstances.length) {
-      stepsCount--
-    }
-  }
-  const increaseStepCount = () => {
-    if (stepsCount < 50) {
-      stepsCount++
-    }
-  }
-
+	const decreaseStepCount = () => {
+		if (stepsCount > colorInstances.length) {
+			stepsCount--;
+		}
+	};
+	const increaseStepCount = () => {
+		if (stepsCount < 50) {
+			stepsCount++;
+		}
+	};
 </script>
 
 <div class="flex justify-center space-x-12 flex-1">
@@ -59,7 +55,11 @@ import ColorCard from '$src/components/ColorCard.svelte';
 		<div class="flex-1 flex flex-col space-y-4">
 			{#each colorInstances as colorInstance, index (index)}
 				<div class="flex-1 flex flex-col">
-          <ColorCard deletable={colorInstances.length > 2} bind:color={colorInstance} on:delete={() => removeColor(index)} />
+					<ColorCard
+						deletable={colorInstances.length > 2}
+						bind:color={colorInstance}
+						on:delete={() => removeColor(index)}
+					/>
 				</div>
 			{/each}
 
@@ -77,7 +77,7 @@ import ColorCard from '$src/components/ColorCard.svelte';
 
 		<div class="flex mb-5 items-center justify-between px-4">
 			<div class="flex justify-between">
-				<button on:click={decreaseStepCount} class="hover:text-curr">
+				<button on:click={decreaseStepCount} class="hover:text-primary-clamped">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						class="h-6 w-6"
@@ -95,7 +95,7 @@ import ColorCard from '$src/components/ColorCard.svelte';
 						bind:value={stepsCount}
 					/>
 				</div>
-				<button on:click={increaseStepCount} class="hover:text-curr">
+				<button on:click={increaseStepCount} class="hover:text-primary-clamped">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						class="h-6 w-6"
