@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { mostReadable, TinyColor } from '@ctrl/tinycolor';
+	import type { ColorFormats } from '@ctrl/tinycolor';
 
 	import chroma from 'chroma-js';
 	import { nearest } from '$src/utils/colors';
@@ -16,10 +17,14 @@
 	let colorInput: string;
 	let colorName: string;
 
+  let inputFormat: ColorFormats;
+
 
 	$: textColor = mostReadable(color.hex(), ['#fff', '#000']).toHexString();
 
 	const dispatch = createEventDispatcher<{ delete }>();
+
+  $: formattedColorValue = new TinyColor(color.hex()).toString(inputFormat)
 
 	const findColorName = () => {
 		colorName = nearest(color.hex()).name;
@@ -28,6 +33,7 @@
 	const onColorInput = async (event) => {
 		colorInput = event.target.value;
     color = chroma(colorInput)
+    inputFormat = new TinyColor(colorInput).format
 		findColorName();
 	};
 
@@ -92,7 +98,7 @@
     
     <input
       type="text"
-      value={color.hex()}
+      value={formattedColorValue}
       class="transition text-center font-semibold text-lg tracking-wider bg-transparent focus:outline-none w-full min-w-0 h-12 rounded-full"
       on:blur={(e) => onColorInput(e)}
       on:keyup={(e) => e.key === 'Enter' && onColorInput(e)}
