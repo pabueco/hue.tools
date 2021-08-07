@@ -53,7 +53,26 @@
 <div class="flex-1 container mx-auto max-w-6xl flex flex-col">
   <div class="flex justify-center space-x-12 flex-1">
     <div class="flex flex-col flex-1">
-      <h2 class="font-bold text-2xl mb-6">Your colors</h2>
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="font-bold text-2xl">Your colors</h2>
+
+        <button on:click={addColor} class="h-8 w-8 border border-white hover:border-primary-clamped hover:text-primary-clamped rounded-full flex items-center justify-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+            />
+          </svg>
+        </button>
+      </div>
   
       <div class="flex-1 flex flex-col space-y-4">
         {#each colorInstances as colorInstance, index (index)}
@@ -65,13 +84,7 @@
             />
           </div>
         {/each}
-  
-        <button
-          on:click={addColor}
-          class="bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center justify-center text-white"
-        >
-          Add
-        </button>
+
       </div>
     </div>
   
