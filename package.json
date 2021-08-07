@@ -33,7 +33,8 @@
 		"svelte-preprocess": "^4.7.4",
 		"tailwindcss": "^2.2.4",
 		"tslib": "^2.0.0",
-		"typescript": "^4.0.0"
+		"typescript": "^4.0.0",
+    "@sveltejs/adapter-vercel": "next"
 	},
 	"type": "module",
 	"dependencies": {
