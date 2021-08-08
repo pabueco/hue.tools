@@ -151,8 +151,7 @@
     
           <button
             on:click={() => (showStepsAsGradient = !showStepsAsGradient)}
-            style="color: {!showStepsAsGradient ? 'var(--color-primary)' : 'currentColor'}"
-            class="ml-5"
+            class="ml-5 {!showStepsAsGradient ? 'text-primary-clamped' : ''}"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

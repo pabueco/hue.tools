@@ -16,7 +16,7 @@
 		style="background: linear-gradient(to right, {gradient});"
 	/> -->
 
-	<div class="fixed inset-0" style="background: {$primaryColor.hex()};" />
+	<div class="fixed inset-0" style="background: {$primaryColor?.hex()};" />
 
   <div class="bg-gray-900 rounded-2xl mb-3 relative z-10 text-white">
     <div
