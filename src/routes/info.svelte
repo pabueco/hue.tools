@@ -15,13 +15,15 @@
 	let colorInstance: chroma.Color = queryColor?.chroma || chroma.random();
 	let initialFormat = queryColor ? queryColor?.tinycolor?.format : 'hex';
 
-	const onColorChange = (event) => {
-		updateQuery('color', new TinyColor(event.detail.color?.hex()).toString(initialFormat))
+	const onColorChange = () => {
+		updateQuery('color', new TinyColor(colorInstance?.hex()).toString(initialFormat))
 	};
 
 	$: $primaryColor = colorInstance;
 
 	$primaryColor = colorInstance;
+
+  onColorChange()
 </script>
 
 <svelte:head>

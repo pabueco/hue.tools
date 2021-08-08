@@ -60,6 +60,8 @@
   const onColorChange = () => {
 		updateQuery('colors', colorInstances.map(c => new TinyColor(c?.hex()).toString('hex')).filter(v => !!v))
 	};
+
+  onColorChange()
 </script>
 
 <svelte:head>
