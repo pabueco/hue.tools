@@ -6,23 +6,33 @@
 	import ColorBlock from '../components/ColorBlock.svelte';
 	import { primaryColor } from '../store';
 	import ColorCard from '$components/ColorCard.svelte';
-  import { page } from '$app/stores';
+	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
+  import { getColorFromUrl, updateQuery } from '$src/utils/url';
 
-  let queryColor = $page.query.get('color')
+	let queryColor = getColorFromUrl();
 
-	let colorInstance: chroma.Color = queryColor ? chroma(queryColor) : chroma.random();
-  let initialFormat = queryColor ? new TinyColor(queryColor).format : 'hex'
+	let colorInstance: chroma.Color = queryColor?.chroma || chroma.random();
+	let initialFormat = queryColor ? queryColor?.tinycolor?.format : 'hex';
+
+	const onColorChange = (event) => {
+		updateQuery('color', new TinyColor(event.detail.color?.hex()).toString(initialFormat))
+	};
 
 	$: $primaryColor = colorInstance;
 
 	$primaryColor = colorInstance;
 </script>
 
+<svelte:head>
+	<title>hue.tools – info</title>
+</svelte:head>
+
 <div class="flex flex-col items-center">
 	<div class="container mx-auto max-w-6xl">
 		<div class="flex">
 			<div class="w-80 flex-1 flex flex-col">
-				<ColorCard bind:color={colorInstance} initialFormat={initialFormat} />
+				<ColorCard bind:color={colorInstance} {initialFormat} on:change={onColorChange} />
 			</div>
 			<div class="ml-10 text-lg w-80">
 				<Fieldset label="Color Spaces">

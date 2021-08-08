@@ -12,8 +12,11 @@
 	import ColorCard from '$src/components/ColorCard.svelte';
   import Fieldset from '$src/components/Fieldset.svelte';
   import ColorSpace from '$src/components/ColorSpace.svelte';
+  import { getColorsFromUrl, updateQuery } from '$src/utils/url';
 
-	let colorInstances: chroma.Color[] = [chroma.random(), chroma.random()];
+	let queryColors = getColorsFromUrl();  
+
+	let colorInstances: chroma.Color[] = queryColors?.map(c => c.chroma) || [chroma.random(), chroma.random()];
 
 	let stepsCount = 10;
 
@@ -31,11 +34,16 @@
 
 	const removeColor = (index: number) => {
 		colorInstances = colorInstances.filter((_, i) => i !== index);
+    onColorChange()
 	};
 	const addColor = () => {
 		const color = chroma.random();
 		colorInstances.push(color);
 		colorInstances = colorInstances;
+    if (stepsCount < colorInstances.length) {
+      stepsCount = colorInstances.length
+    }
+    onColorChange()
 	};
 
 	const decreaseStepCount = () => {
@@ -48,7 +56,15 @@
 			stepsCount++;
 		}
 	};
+
+  const onColorChange = () => {
+		updateQuery('colors', colorInstances.map(c => new TinyColor(c?.hex()).toString('hex')).filter(v => !!v))
+	};
 </script>
+
+<svelte:head>
+  <title>hue.tools – mix</title>
+</svelte:head>
 
 <div class="flex-1 container mx-auto max-w-6xl flex flex-col">
   <div class="flex justify-center space-x-12 flex-1">
@@ -81,6 +97,7 @@
               deletable={colorInstances.length > 2}
               bind:color={colorInstance}
               on:delete={() => removeColor(index)}
+              on:change={onColorChange}
             />
           </div>
         {/each}

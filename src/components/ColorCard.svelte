@@ -11,7 +11,7 @@
 
 	export let color: chroma.Color;
   export let deletable: boolean = false;
-  export let initialFormat: string;
+  export let initialFormat: string = null;
 
 	let isColorPickerVisible = false;
 
@@ -22,7 +22,7 @@
 
 	$: textColor = mostReadable(color.hex(), ['#fff', '#000']).toHexString();
 
-	const dispatch = createEventDispatcher<{ delete }>();
+	const dispatch = createEventDispatcher<{ delete, change: { color: chroma.Color } }>();
 
   $: formattedColorValue = new TinyColor(color.hex()).toString(inputFormat)
 
@@ -35,7 +35,19 @@
     color = chroma(colorInput)
     inputFormat = new TinyColor(colorInput).format
 		findColorName();
+
+    dispatch('change', {
+      color
+    })
 	};
+
+  const onColorPickerChange = () => {
+    findColorName()
+
+    dispatch('change', {
+      color
+    })
+  }
 
   findColorName()
   
@@ -92,7 +104,7 @@
 	<div class="bg-black bg-opacity-25 text-white hover:bg-opacity-50 focus:bg-opacity-50 rounded-3xl transition mt-12 {isColorPickerVisible ? 'bg-opacity-50' : ''}">
     {#if isColorPickerVisible}
       <div class="w-full flex justify-center pt-8 mb-5">
-        <ColorPicker bind:color={color} on:change={findColorName} />
+        <ColorPicker bind:color={color} on:change={onColorPickerChange} />
       </div>
     {/if}
     
