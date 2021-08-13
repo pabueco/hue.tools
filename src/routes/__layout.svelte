@@ -4,9 +4,16 @@
   import { SvelteToast } from '@zerodevx/svelte-toast'
 
   import { page } from '$app/stores';
+  import { dev } from '$app/env';
   import { complementColor, primaryColor, primaryColorClamped } from "../store";
 
 </script>
+
+<svelte:head>
+  {#if !dev}
+    <script defer data-domain="hue.tools" src="https://plausible.io/js/plausible.js"></script>
+  {/if}
+</svelte:head>
 
 <SvelteToast options={{ reversed: true, dismissable: false }} />
 
