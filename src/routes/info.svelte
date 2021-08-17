@@ -168,7 +168,7 @@
 						<h6 class="text-base font-medium mb-3">Analogous</h6>
 						<div class="flex flex-col space-y-2">
 							{#each new TinyColor(colorInstance.hex()).analogous() as color}
-								<ColorBlock color={color.toHexString()} expands />
+								<ColorBlock color={color.toHexString()} expands animatesOnHover />
 							{/each}
 						</div>
 					</div>
@@ -176,7 +176,7 @@
 						<h6 class="text-base font-medium mb-3">Monochromatic</h6>
 						<div class="flex flex-col space-y-2">
 							{#each new TinyColor(colorInstance.hex()).monochromatic() as color}
-								<ColorBlock color={color.toHexString()} expands />
+								<ColorBlock color={color.toHexString()} expands animatesOnHover />
 							{/each}
 						</div>
 					</div>
@@ -184,7 +184,7 @@
 						<h6 class="text-base font-medium mb-3">Splitcomplement</h6>
 						<div class="flex flex-col space-y-2">
 							{#each new TinyColor(colorInstance.hex()).splitcomplement() as color}
-								<ColorBlock color={color.toHexString()} expands />
+								<ColorBlock color={color.toHexString()} expands animatesOnHover />
 							{/each}
 						</div>
 					</div>
@@ -192,7 +192,7 @@
 						<h6 class="text-base font-medium mb-3">Triad</h6>
 						<div class="flex flex-col space-y-2">
 							{#each new TinyColor(colorInstance.hex()).triad() as color}
-								<ColorBlock color={color.toHexString()} expands />
+								<ColorBlock color={color.toHexString()} expands animatesOnHover />
 							{/each}
 						</div>
 					</div>
@@ -200,7 +200,7 @@
 						<h6 class="text-base font-medium mb-3">Tetrad</h6>
 						<div class="flex flex-col space-y-2">
 							{#each new TinyColor(colorInstance.hex()).tetrad() as color}
-								<ColorBlock color={color.toHexString()} expands />
+								<ColorBlock color={color.toHexString()} expands animatesOnHover />
 							{/each}
 						</div>
 					</div>
@@ -208,7 +208,7 @@
 						<h6 class="text-base font-medium mb-3">Polyad</h6>
 						<div class="flex flex-col space-y-2">
 							{#each new TinyColor(colorInstance.hex()).polyad(6) as color}
-								<ColorBlock color={color.toHexString()} expands />
+								<ColorBlock color={color.toHexString()} expands animatesOnHover />
 							{/each}
 						</div>
 					</div>
@@ -217,7 +217,7 @@
 						<div class="flex space-x-2">
 							<ColorBlock
 								color={new TinyColor(colorInstance.hex()).complement().toHexString()}
-								expands
+								expands animatesOnHover
 							/>
 						</div>
 					</div>
