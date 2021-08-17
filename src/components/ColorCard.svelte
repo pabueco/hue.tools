@@ -2,14 +2,14 @@
 	import { mostReadable, TinyColor } from '@ctrl/tinycolor';
 	import type { ColorFormats } from '@ctrl/tinycolor';
 
-	import chroma from 'chroma-js';
 	import { nearest } from '$src/utils/colors';
 	import { createEventDispatcher } from 'svelte';
 
 	import ColorPicker from './ColorPicker.svelte';
   import { clickOutside } from '$src/directives/clickoutside';
+  import { Color } from '$src/models/Color';
 
-	export let color: chroma.Color;
+	export let color: Color;
   export let deletable: boolean = false;
   export let initialFormat: string = null;
 
@@ -22,7 +22,7 @@
 
 	$: textColor = mostReadable(color.hex(), ['#fff', '#000']).toHexString();
 
-	const dispatch = createEventDispatcher<{ delete, change: { color: chroma.Color } }>();
+	const dispatch = createEventDispatcher<{ delete, change: { color: Color } }>();
 
   $: formattedColorValue = new TinyColor(color.hex()).toString(inputFormat)
 
@@ -32,7 +32,7 @@
 
 	const onColorInput = async (event) => {
 		colorInput = event.target.value;
-    color = chroma(colorInput)
+    color = new Color(colorInput)
     inputFormat = new TinyColor(colorInput).format
 		findColorName();
 
@@ -58,6 +58,7 @@
   on:clickoutside={() => isColorPickerVisible = false}
 	on:click|self={() => (isColorPickerVisible = !isColorPickerVisible)}
 	style="color: {textColor}; background-color: {color.hex?.()}; box-shadow: 0 10px 30px -10px {color
+    .chroma
 		.alpha(0.75)
 		.css()}"
 	class="relative transition rounded-2xl p-4 flex-1 flex flex-col justify-end cursor-pointer group"

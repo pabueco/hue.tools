@@ -1,4 +1,6 @@
 <script lang="ts">
+	export const ssr = false;
+
 	import chroma from 'chroma-js';
 	import { TinyColor } from '@ctrl/tinycolor';
 	import ColorSpace from '../components/ColorSpace.svelte';
@@ -9,10 +11,11 @@
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
   import { getColorFromUrl, updateQuery } from '$src/utils/url';
+  import { Color } from '$src/models/Color';
 
 	let queryColor = getColorFromUrl();
 
-	let colorInstance: chroma.Color = queryColor?.chroma || chroma.random();
+	let colorInstance: Color = queryColor || Color.random();
 	let initialFormat = queryColor ? queryColor?.tinycolor?.format : 'hex';
 
 	const onColorChange = () => {
@@ -24,6 +27,15 @@
 	$primaryColor = colorInstance;
 
   onColorChange()
+
+  $: combiAnalogous = new TinyColor(colorInstance.hex()).analogous().map(c => Color.fromTinyColor(c))
+  $: combiMonochromatic = new TinyColor(colorInstance.hex()).monochromatic().map(c => Color.fromTinyColor(c))
+  $: combiSplitcomplement = new TinyColor(colorInstance.hex()).splitcomplement().map(c => Color.fromTinyColor(c))
+  $: combiTriad = new TinyColor(colorInstance.hex()).triad().map(c => Color.fromTinyColor(c))
+  $: combiTetrad = new TinyColor(colorInstance.hex()).tetrad().map(c => Color.fromTinyColor(c))
+  $: combiPolyad = new TinyColor(colorInstance.hex()).polyad(6).map(c => Color.fromTinyColor(c))
+  $: colorComplement = Color.fromTinyColor(new TinyColor(colorInstance.hex()).complement())
+
 </script>
 
 <svelte:head>
@@ -38,16 +50,16 @@
 			</div>
 			<div class="ml-10 text-lg w-80">
 				<Fieldset label="Color Spaces">
-					<ColorSpace label="HEX" value={colorInstance.hex()} />
-					<ColorSpace label="RGB" value={colorInstance.rgb().join(', ')} />
-					<ColorSpace label="HSL" value={colorInstance.hsl()} />
-					<ColorSpace label="HSV" value={colorInstance.hsv()} />
-					<ColorSpace label="HSI" value={colorInstance.hsi()} />
-					<ColorSpace label="LCH" value={colorInstance.lch()} />
-					<ColorSpace label="LAB" value={colorInstance.lab()} />
-					<ColorSpace label="Numeric RGB" value={colorInstance.num()} />
-					<ColorSpace label="Temperature" value={colorInstance.temperature()} />
-					<ColorSpace label="GL" value={colorInstance.gl()} />
+					<ColorSpace label="HEX" value={colorInstance.chroma.hex()} />
+					<ColorSpace label="RGB" value={colorInstance.chroma.rgb().join(', ')} />
+					<ColorSpace label="HSL" value={colorInstance.chroma.hsl()} />
+					<ColorSpace label="HSV" value={colorInstance.chroma.hsv()} />
+					<ColorSpace label="HSI" value={colorInstance.chroma.hsi()} />
+					<ColorSpace label="LCH" value={colorInstance.chroma.lch()} />
+					<ColorSpace label="LAB" value={colorInstance.chroma.lab()} />
+					<ColorSpace label="Numeric RGB" value={colorInstance.chroma.num()} />
+					<ColorSpace label="Temperature" value={colorInstance.chroma.temperature()} />
+					<ColorSpace label="GL" value={colorInstance.chroma.gl()} />
 				</Fieldset>
 			</div>
 			<div class="w-80 ml-10">
@@ -167,48 +179,48 @@
 					<div class="flex-1">
 						<h6 class="text-base font-medium mb-3">Analogous</h6>
 						<div class="flex flex-col space-y-2">
-							{#each new TinyColor(colorInstance.hex()).analogous() as color}
-								<ColorBlock color={color.toHexString()} expands animatesOnHover />
+							{#each combiAnalogous as color}
+								<ColorBlock color={color} expands animatesOnHover />
 							{/each}
 						</div>
 					</div>
 					<div class="flex-1">
 						<h6 class="text-base font-medium mb-3">Monochromatic</h6>
 						<div class="flex flex-col space-y-2">
-							{#each new TinyColor(colorInstance.hex()).monochromatic() as color}
-								<ColorBlock color={color.toHexString()} expands animatesOnHover />
+							{#each combiMonochromatic as color}
+								<ColorBlock color={color} expands animatesOnHover />
 							{/each}
 						</div>
 					</div>
 					<div class="flex-1">
 						<h6 class="text-base font-medium mb-3">Splitcomplement</h6>
 						<div class="flex flex-col space-y-2">
-							{#each new TinyColor(colorInstance.hex()).splitcomplement() as color}
-								<ColorBlock color={color.toHexString()} expands animatesOnHover />
+							{#each combiSplitcomplement as color}
+								<ColorBlock color={color} expands animatesOnHover />
 							{/each}
 						</div>
 					</div>
 					<div class="flex-1">
 						<h6 class="text-base font-medium mb-3">Triad</h6>
 						<div class="flex flex-col space-y-2">
-							{#each new TinyColor(colorInstance.hex()).triad() as color}
-								<ColorBlock color={color.toHexString()} expands animatesOnHover />
+							{#each combiTriad as color}
+								<ColorBlock color={color} expands animatesOnHover />
 							{/each}
 						</div>
 					</div>
 					<div class="flex-1">
 						<h6 class="text-base font-medium mb-3">Tetrad</h6>
 						<div class="flex flex-col space-y-2">
-							{#each new TinyColor(colorInstance.hex()).tetrad() as color}
-								<ColorBlock color={color.toHexString()} expands animatesOnHover />
+							{#each combiTetrad as color}
+								<ColorBlock color={color} expands animatesOnHover />
 							{/each}
 						</div>
 					</div>
 					<div class="flex-1">
 						<h6 class="text-base font-medium mb-3">Polyad</h6>
 						<div class="flex flex-col space-y-2">
-							{#each new TinyColor(colorInstance.hex()).polyad(6) as color}
-								<ColorBlock color={color.toHexString()} expands animatesOnHover />
+							{#each combiPolyad as color}
+								<ColorBlock color={color} expands animatesOnHover />
 							{/each}
 						</div>
 					</div>
@@ -216,7 +228,7 @@
 						<h6 class="text-base font-bold mb-3">Complement</h6>
 						<div class="flex space-x-2">
 							<ColorBlock
-								color={new TinyColor(colorInstance.hex()).complement().toHexString()}
+								color={colorComplement}
 								expands animatesOnHover
 							/>
 						</div>

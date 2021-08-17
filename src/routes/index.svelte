@@ -1,32 +1,38 @@
 <script lang="ts">
 	export const ssr = false;
 
-	import chroma, { scale } from 'chroma-js';
-	// import iro from '@jaames/iro';
-	import { onMount } from 'svelte';
+	import chroma, { InterpolationMode } from 'chroma-js';
 	import { TinyColor, mostReadable } from '@ctrl/tinycolor';
 
-	import ColorPicker from '../components/ColorPicker.svelte';
 	import { copyToClipboard } from '../utils/clipboard';
-	import { primaryColor } from '../store';
+	import { outputFormat, primaryColor } from '../store';
 	import ColorCard from '$src/components/ColorCard.svelte';
   import Fieldset from '$src/components/Fieldset.svelte';
   import ColorSpace from '$src/components/ColorSpace.svelte';
   import { getColorsFromUrl, updateQuery } from '$src/utils/url';
+  import Field from '$src/components/Field.svelte';
+  import { Color } from '$src/models/Color';
 
 	let queryColors = getColorsFromUrl();  
 
-	let colorInstances: chroma.Color[] = queryColors?.map(c => c.chroma) || [chroma.random(), chroma.random()];
+	let colorInstances: Color[] = queryColors || [Color.random(), Color.random()];
 
-	let stepsCount = 10;
+	let stepsCount = Number(localStorage.getItem('steps')) || 10;
 
 	let showStepsAsGradient = false;
 
-	$: colorSteps = chroma.scale(colorInstances).mode('lch').colors(stepsCount);
-	$: colorStepsText = colorSteps.map((i) => mostReadable(i, ['#fff', '#000']).toHexString());
+  let mode: InterpolationMode = (localStorage.getItem('mode') || 'lch') as InterpolationMode
 
-	$: averageColor = chroma.average(colorInstances, 'lch');
-	$: averageColorText = mostReadable(averageColor.hex(), ['#fff', '#000']).toHexString();
+  $: localStorage.setItem('mode', mode)
+  $: localStorage.setItem('steps', stepsCount.toString())
+
+  let modes = ['lch', 'hsl', 'lab', 'rgb', 'lrgb'] as InterpolationMode[]
+
+	$: colorSteps = chroma.scale(colorInstances.map(c => c.hex())).mode(mode).colors(stepsCount).map(c => new Color(c));
+	$: colorStepsText = colorSteps.map((c) => c.textColor());
+
+	$: averageColor = Color.fromChroma(chroma.average(colorInstances.map(c => c.chroma), mode));
+	$: averageColorText = averageColor.textColor();
 
 	$: $primaryColor = averageColor;
 
@@ -37,7 +43,7 @@
     onColorChange()
 	};
 	const addColor = () => {
-		const color = chroma.random();
+		const color = Color.random();
 		colorInstances.push(color);
 		colorInstances = colorInstances;
     if (stepsCount < colorInstances.length) {
@@ -113,7 +119,7 @@
 
         <div class="flex items-center">
           <div class="flex justify-between">
-            <button on:click={decreaseStepCount} class="hover:text-primary-clamped">
+            <button on:click={decreaseStepCount} class="transition hover:text-primary-clamped">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-6 w-6"
@@ -133,7 +139,7 @@
                 max="50"
               />
             </div>
-            <button on:click={increaseStepCount} class="hover:text-primary-clamped">
+            <button on:click={increaseStepCount} class="transition hover:text-primary-clamped">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-6 w-6"
@@ -153,7 +159,7 @@
     
           <button
             on:click={() => (showStepsAsGradient = !showStepsAsGradient)}
-            class="ml-5 {!showStepsAsGradient ? 'text-primary-clamped' : ''}"
+            class="ml-5 transition {!showStepsAsGradient ? 'text-primary-clamped' : ''}"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -182,12 +188,12 @@
             <div
               style="background-color: {colorStep}"
               class="flex-1 w-full rounded-2xl cursor-pointer flex items-center justify-center group"
-              on:click={() => copyToClipboard(colorStep)}
+              on:click={() => copyToClipboard(colorStep.toString($outputFormat))}
             >
               <span
                 style="color: {colorStepsText[index]}"
                 class="font-semibold text-lg opacity-0 transform scale-75 group-hover:opacity-100 group-hover:scale-100 transition"
-                >{colorStep}</span
+                >{colorStep.toString($outputFormat)}</span
               >
             </div>
           {/each}
@@ -200,9 +206,9 @@
       <div
         style="background-color: {averageColor}; color: {averageColorText}"
         class="flex-1 rounded-2xl flex items-center justify-center cursor-pointer relative"
-        on:click|self={() => copyToClipboard(averageColor.hex())}
+        on:click|self={() => copyToClipboard(averageColor.toString($outputFormat))}
       >
-        <span class="font-semibold text-xl">{averageColor}</span>
+        <span class="font-semibold text-xl">{averageColor.toString($outputFormat)}</span>
 
         <a href="/info?color={averageColor.hex().replace('#', '')}" class="absolute bottom-4 right-4 opacity-70 transition hover:opacity-100">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -214,6 +220,20 @@
   </div>
 
   <div class="mt-16">
+    <Fieldset label="Settings">
+      <Field label="Interpolation Mode" hoverable={false}>
+        <div class="flex space-x-5 mt-2">
+          {#each modes as type}
+            <button class="uppercase font-medium tracking-wider transition text-xl {mode === type ? 'text-primary-clamped' : ''}" on:click={() => mode = type}>
+              {type}
+            </button>
+          {/each}
+        </div>
+      </Field>
+    </Fieldset>
+  </div>
+
+  <div class="mt-10">
     <Fieldset label="CSS">
       <ColorSpace label="Linear Gradient" value="linear-gradient(to bottom, {colorInstances.map(c => c.hex()).join(', ')})" />
     </Fieldset>

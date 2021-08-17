@@ -1,11 +1,22 @@
 <script>
+  export const ssr = false;
+
   import "../app.postcss"
 
   import { SvelteToast } from '@zerodevx/svelte-toast'
 
   import { page } from '$app/stores';
-  import { dev } from '$app/env';
-  import { complementColor, primaryColor, primaryColorClamped } from "../store";
+  import { browser, dev } from '$app/env';
+  import { complementColor, outputFormat, primaryColor, primaryColorClamped } from "../store";
+  import { onMount } from "svelte";
+  
+  onMount(() => {
+    $outputFormat = localStorage.getItem('format') || 'hex'
+  })
+
+  $: if (browser && localStorage && $outputFormat) {
+    localStorage.setItem('format', $outputFormat)
+  }
 
 </script>
 
@@ -42,6 +53,18 @@
 				<a href="/" class="{$page.path === '/' ? 'text-primary-clamped' : ''}">Mix</a>
 				<a href="/info" class="{$page.path === '/info' ? 'text-primary-clamped' : ''}">Info</a>
 			</div>
+
+      <div class="absolute right-10 flex items-center">
+        <label for="" class="mr-3">Output format:</label>
+        <select bind:value={$outputFormat} class="bg-gray-700 transition hover:bg-gray-600 focus:outline-none px-2 py-1 rounded-md cursor-pointer">
+          <option value="hex" class="bg-transparent">HEX</option>
+          <option value="rgb">RGB</option>
+          <option value="hsl">HSL</option>
+          <option value="hsv">HSV</option>
+          <option value="hsi">HSI</option>
+          <option value="lab">LAB</option>
+        </select>
+      </div>
 
 		</div>
   </div>
