@@ -25,6 +25,8 @@
 	{#if !dev}
 		<script defer data-domain="hue.tools" src="https://plausible.io/js/plausible.js"></script>
 	{/if}
+
+  <meta name="description" content="A free color mixer, blender and info tool. Mix multiple colors, get links for design inspiration and stock images based on a color and view various color combinations." />
 </svelte:head>
 
 <SvelteToast options={{ reversed: true, dismissable: false }} />
