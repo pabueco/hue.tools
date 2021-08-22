@@ -2,16 +2,15 @@
 	export const ssr = false;
 
 	import chroma, { InterpolationMode } from 'chroma-js';
-	import { TinyColor, mostReadable } from '@ctrl/tinycolor';
 
-	import { copyToClipboard } from '../utils/clipboard';
-	import { outputFormat, primaryColor } from '../store';
+	import { primaryColor } from '../store';
 	import ColorCard from '$src/components/ColorCard.svelte';
   import Fieldset from '$src/components/Fieldset.svelte';
   import ColorSpace from '$src/components/ColorSpace.svelte';
   import { getColorsFromUrl, updateQuery } from '$src/utils/url';
   import Field from '$src/components/Field.svelte';
   import { Color } from '$src/models/Color';
+  import ColorBlock from '$src/components/ColorBlock.svelte';
 
 	let queryColors = getColorsFromUrl();  
 
@@ -29,10 +28,8 @@
   let modes = ['lch', 'hsl', 'lab', 'rgb', 'lrgb'] as InterpolationMode[]
 
 	$: colorSteps = chroma.scale(colorInstances.map(c => c.hex())).mode(mode).colors(stepsCount).map(c => new Color(c));
-	$: colorStepsText = colorSteps.map((c) => c.textColor());
 
 	$: averageColor = Color.fromChroma(chroma.average(colorInstances.map(c => c.chroma), mode));
-	$: averageColorText = averageColor.textColor();
 
 	$: $primaryColor = averageColor;
 
@@ -64,7 +61,7 @@
 	};
 
   const onColorChange = () => {
-		updateQuery('colors', colorInstances.map(c => new TinyColor(c?.hex()).toString('hex')).filter(v => !!v))
+		updateQuery('colors', colorInstances.map(c => c.toString('hex8')).filter(v => !!v))
 	};
 
   onColorChange()
@@ -185,37 +182,21 @@
       {:else}
         <div class="flex-1 flex flex-col space-y-3">
           {#each colorSteps as colorStep, index (index)}
-            <div
-              style="background-color: {colorStep}"
-              class="flex-1 w-full rounded-2xl cursor-pointer flex items-center justify-center group"
-              on:click={() => copyToClipboard(colorStep.toString($outputFormat))}
-            >
-              <span
-                style="color: {colorStepsText[index]}"
-                class="font-semibold text-lg opacity-0 transform scale-75 group-hover:opacity-100 group-hover:scale-100 transition"
-                >{colorStep.toString($outputFormat)}</span
-              >
-            </div>
+            <ColorBlock color={colorStep} expands className="rounded-xl" />
           {/each}
         </div>
       {/if}
     </div>
   
     <div class="flex flex-col flex-1">
-      <h2 class="font-bold text-2xl mb-6">Mixed</h2>
-      <div
-        style="background-color: {averageColor}; color: {averageColorText}"
-        class="flex-1 rounded-2xl flex items-center justify-center cursor-pointer relative"
-        on:click|self={() => copyToClipboard(averageColor.toString($outputFormat))}
-      >
-        <span class="font-semibold text-xl">{averageColor.toString($outputFormat)}</span>
-
+      <h2 class="font-bold text-2xl mb-6">Mixed</h2>      
+      <ColorBlock color={averageColor} expands alwaysShowColor className="rounded-2xl">
         <a href="/info?color={averageColor.hex().replace('#', '')}" class="absolute bottom-4 right-4 opacity-70 transition hover:opacity-100">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </a>
-      </div>
+      </ColorBlock>
     </div>
   </div>
 

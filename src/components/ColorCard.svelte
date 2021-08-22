@@ -12,6 +12,7 @@
 	export let color: Color;
   export let deletable: boolean = false;
   export let initialFormat: string = null;
+  export let hasTransparency: boolean = false;
 
 	let isColorPickerVisible = false;
 
@@ -27,7 +28,7 @@
   $: formattedColorValue = new TinyColor(color.hex()).toString(inputFormat)
 
 	const findColorName = () => {
-		colorName = nearest(color.hex()).name;
+		colorName = nearest(color.toString('hex')).name;
 	};
 
 	const onColorInput = async (event) => {
@@ -59,7 +60,7 @@
 	on:click|self={() => (isColorPickerVisible = !isColorPickerVisible)}
 	style="color: {textColor}; background-color: {color.hex?.()}; box-shadow: 0 10px 30px -10px {color
     .chroma
-		.alpha(0.75)
+		.alpha(color.chroma.alpha() - (color.chroma.alpha() / 4))
 		.css()}"
 	class="relative transition rounded-2xl p-4 flex-1 flex flex-col justify-end cursor-pointer group"
 >
@@ -105,7 +106,7 @@
 	<div class="bg-black bg-opacity-25 text-white hover:bg-opacity-50 focus:bg-opacity-50 rounded-3xl transition mt-12 {isColorPickerVisible ? 'bg-opacity-50' : ''}">
     {#if isColorPickerVisible}
       <div class="w-full flex justify-center pt-8 mb-5">
-        <ColorPicker bind:color={color} on:change={onColorPickerChange} />
+        <ColorPicker bind:color={color} on:change={onColorPickerChange} showAlphaSlider={hasTransparency} />
       </div>
     {/if}
     

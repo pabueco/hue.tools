@@ -6,6 +6,8 @@ export class Color {
   public chroma: chroma.Color;
   public tinycolor: TinyColor;
 
+  public computedTextColor: string;
+
   constructor(color?: string) {
     if (color) {
       this.chroma = chroma(color)
@@ -38,15 +40,19 @@ export class Color {
   }
 
   public textColor(): string {
-    return mostReadable(this.chroma.hex(), ['#fff', '#000']).toHexString()
+    if (!this.computedTextColor) {
+      this.computedTextColor = mostReadable(this.chroma.hex(), ['#fff', '#000']).toHexString()
+    }
+
+    return this.computedTextColor
   }
 
   public hex(): string {
     return this.chroma.hex()
   }
 
-  static random(): Color {
-    const c = chroma.random()
+  static random(alpha = 1): Color {
+    const c = chroma.random().alpha(alpha)
     return Color.fromChroma(c)
   }
 }

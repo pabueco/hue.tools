@@ -6,6 +6,7 @@
   let ref: HTMLElement
   let colorPicker: iro.ColorPicker
   export let color: Color
+  export let showAlphaSlider: boolean = false
 
   $: if (color && colorPicker) {
     colorPicker.color.hexString = color.hex()
@@ -15,6 +16,30 @@
   const dispatch = createEventDispatcher<{ change: { color: Color }}>();
 
   onMount(() => {
+
+    const layout = [
+      { 
+        component: iro.ui.Box,
+        options: {}
+      },
+      { 
+        component: iro.ui.Slider,
+        options: {
+          // can also be 'saturation', 'color', 'red', 'green', 'blue', 'alpha' or 'kelvin'
+          sliderType: 'hue'
+        }
+      },
+    ]
+
+    if (showAlphaSlider) {
+      layout.push({ 
+          component: iro.ui.Slider,
+          options: {
+            sliderType: 'alpha'
+          }
+        })
+    }
+
     // @ts-ignore
     colorPicker = new iro.ColorPicker(ref, {
       color: Color.random().hex(),
@@ -22,28 +47,16 @@
       boxHeight: 180,
       // padding: 12,
       // layoutDirection: 'horizontal',
-      layout: [
-        { 
-          component: iro.ui.Box,
-          options: {}
-        },
-        { 
-          component: iro.ui.Slider,
-          options: {
-            // can also be 'saturation', 'color', 'red', 'green', 'blue', 'alpha' or 'kelvin'
-            sliderType: 'hue'
-          }
-        },
-      ]
+      layout
     });
 
     colorPicker.on('color:change', function(newColor: iro.Color) {
-      color = new Color(newColor.hexString)
+      color = new Color(newColor.rgbaString)
     });
     
     colorPicker.on('input:end', function(newColor: iro.Color) {
       dispatch('change', {
-        color: new Color(newColor.hexString)
+        color: new Color(newColor.rgbaString)
       })
     });
   })

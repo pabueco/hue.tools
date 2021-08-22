@@ -7,12 +7,25 @@
 	export let color: Color;
 	export let expands: boolean = false;
 	export let animatesOnHover: boolean = false;
+	export let alwaysShowColor: boolean = false;
+	export let className: string = '';
+
+  let textColor = undefined
+
+  $: if (alwaysShowColor) {
+    textColor = color.textColor()
+  }
 </script>
 
 <div
-	style="background: {color.hex()}"
-	class="rounded-lg h-10 cursor-pointer transition duration-200 {expands
-		? 'w-full'
-		: 'w-10'} {animatesOnHover ? 'transform hover:scale-110' : ''} active:scale-90"
+	style="background: {color.hex()}; color: {textColor}"
+	class="group relative min-h-[2.5rem] cursor-pointer transition duration-200 flex items-center justify-center select-none {expands
+		? 'w-full flex-1'
+		: 'w-10'} {animatesOnHover ? 'transform hover:scale-110' : ''} active:scale-90 {className}"
 	on:click={() => copyToClipboard(color.toString($outputFormat))}
-/>
+  on:mouseenter={() => !alwaysShowColor ? textColor = color.textColor() : null}
+>
+  <span class="{!alwaysShowColor ? 'opacity-0 scale-75' : ''} transform group-hover:opacity-100 group-hover:scale-100 font-medium" style="transition: opacity 150ms, transform 150ms;">{color.toString($outputFormat)}</span>
+
+  <slot />
+</div>

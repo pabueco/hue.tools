@@ -14,7 +14,8 @@ const config = {
         primary: {
           DEFAULT: 'var(--color-primary)',
           clamped: 'var(--color-primary-clamped)',
-        }
+          complement: 'var(--color-complement)',
+        },
       },
 
       fontFamily: {
