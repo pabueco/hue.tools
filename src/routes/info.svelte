@@ -1,15 +1,12 @@
 <script lang="ts">
 	export const ssr = false;
 
-	import chroma from 'chroma-js';
 	import { TinyColor } from '@ctrl/tinycolor';
 	import ColorSpace from '../components/ColorSpace.svelte';
 	import Fieldset from '../components/Fieldset.svelte';
 	import ColorBlock from '../components/ColorBlock.svelte';
 	import { primaryColor } from '../store';
 	import ColorCard from '$components/ColorCard.svelte';
-	import { page } from '$app/stores';
-	import { goto } from '$app/navigation';
 	import { getColorFromUrl, updateQuery } from '$src/utils/url';
 	import { Color } from '$src/models/Color';
 

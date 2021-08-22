@@ -7,8 +7,7 @@ import ColorBlock from '$src/components/ColorBlock.svelte';
 
 	import Fieldset from '$src/components/Fieldset.svelte';
 	import { Color } from '$src/models/Color';
-	import { outputFormat, primaryColor } from '$src/store';
-	import { copyToClipboard } from '$src/utils/clipboard';
+	import { primaryColor } from '$src/store';
 	import { getColorsFromUrl, updateQuery } from '$src/utils/url';
 	import * as blend from 'color-blend';
 
@@ -36,7 +35,6 @@ import ColorBlock from '$src/components/ColorBlock.svelte';
 	let colorInstances: Color[] = getColorsFromUrl() || [Color.random(0.5), Color.random(0.5)];
 
 	$: resultColor = new Color(blend[mode](...colorInstances.map((c) => c.tinycolor.toRgb())));
-	$: resultColorText = resultColor.textColor();
 
 	$: $primaryColor = resultColor;
 
