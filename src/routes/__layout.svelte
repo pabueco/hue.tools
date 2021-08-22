@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	export const ssr = false;
 
 	import '../app.postcss';
@@ -8,7 +8,7 @@
 	import { page } from '$app/stores';
 	import { browser, dev } from '$app/env';
 	import { complementColor, outputFormat, primaryColor, primaryColorClamped } from '../store';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { copyToClipboard } from '$src/utils/clipboard';
 	import { Color } from '$src/models/Color';
 
@@ -66,7 +66,7 @@
 					</svg>
 				</button>
 				<button
-					on:click={() => copyToClipboard(window.location.href, 'Copied color URL')}
+					on:click={(e) => copyToClipboard(e, window.location.href)}
 					class="ml-5 hover:text-primary-clamped transition"
 				>
 					<svg

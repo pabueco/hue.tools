@@ -10,7 +10,7 @@
 </script>
 
 <Field label={label}>
-  <span on:click={() => copyToClipboard(formattedValue)}>
+  <span on:click={(e) => copyToClipboard(e, formattedValue)}>
     {formattedValue}
   </span>
 </Field>
