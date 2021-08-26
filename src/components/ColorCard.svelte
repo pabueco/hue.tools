@@ -62,7 +62,7 @@
     .chroma
 		.alpha(color.chroma.alpha() - (color.chroma.alpha() / 4))
 		.css()}"
-	class="relative transition rounded-2xl p-4 flex-1 flex flex-col justify-end cursor-pointer group"
+	class="relative transition rounded-2xl p-4 flex-1 flex flex-col justify-end cursor-pointer group min-h-[175px]"
 >
 
   {#if deletable}

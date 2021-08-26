@@ -77,7 +77,7 @@ import ColorBlock from '$src/components/ColorBlock.svelte';
 		</Field>
 	</Fieldset>
 
-	<div class="flex space-x-10 mt-12 flex-1">
+	<div class="flex flex-col lg:flex-row gap-10 mt-12 flex-1">
 		<div class="flex-1 flex flex-col">
 			<h2 class="font-bold text-2xl mb-6">Your colors</h2>
 			<div class="flex-1 flex flex-col space-y-4">
@@ -97,7 +97,7 @@ import ColorBlock from '$src/components/ColorBlock.svelte';
 
 		<div class="flex flex-col flex-1">
 			<h2 class="font-bold text-2xl mb-6">Result</h2>
-			<ColorBlock color={resultColor} expands alwaysShowColor className="rounded-2xl">
+			<ColorBlock color={resultColor} expands alwaysShowColor className="rounded-2xl min-h-[100px]">
         <a on:click|stopPropagation={() => {}} href="/info?color={resultColor.hex().replace('#', '')}" class="absolute bottom-4 right-4 opacity-70 transition hover:opacity-100">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />

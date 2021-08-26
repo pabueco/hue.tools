@@ -72,8 +72,8 @@
 </svelte:head>
 
 <div class="flex-1 container mx-auto max-w-6xl flex flex-col">
-  <div class="flex justify-center space-x-12 flex-1">
-    <div class="flex flex-col flex-1">
+  <div class="flex flex-col lg:flex-row justify-center gap-12 flex-1">
+    <div class="flex flex-col flex-1 order-1">
       <div class="flex items-center justify-between mb-6">
         <h2 class="font-bold text-2xl">Your colors</h2>
 
@@ -110,7 +110,7 @@
       </div>
     </div>
   
-    <div class="flex flex-col flex-1">
+    <div class="flex flex-col flex-1 order-3 lg:order-2">
       <div class="flex items-center justify-between mb-6">
         <h2 class="font-bold text-2xl">Steps</h2>
 
@@ -188,9 +188,9 @@
       {/if}
     </div>
   
-    <div class="flex flex-col flex-1">
+    <div class="flex flex-col flex-1 order-2 lg:order-3">
       <h2 class="font-bold text-2xl mb-6">Mixed</h2>      
-      <ColorBlock color={averageColor} expands alwaysShowColor className="rounded-2xl">
+      <ColorBlock color={averageColor} expands alwaysShowColor className="rounded-2xl min-h-[100px]">
         <a on:click|stopPropagation={() => {}} href="/info?color={averageColor.hex().replace('#', '')}" class="absolute bottom-4 right-4 opacity-70 transition hover:opacity-100">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
