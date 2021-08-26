@@ -10,6 +10,7 @@
 	export let animatesOnClick: boolean = false;
 	export let alwaysShowColor: boolean = false;
 	export let className: string = '';
+	export let size: string = 'default';
 
   let textColor = undefined
 
@@ -20,9 +21,9 @@
 
 <div
 	style="background: {color.hex()}; color: {textColor}"
-	class="group relative min-h-[2.5rem] cursor-pointer transition duration-200 flex items-center justify-center select-none {expands
+	class="group relative min-h-[2.5rem] cursor-pointer transition duration-200 flex items-center justify-center select-none whitespace-nowrap {expands
 		? 'w-full flex-1'
-		: 'w-10'} {animatesOnHover ? 'transform hover:scale-110' : ''} {animatesOnClick ? 'active:scale-90' : ''} {className}"
+		: 'w-10'} {animatesOnHover ? 'transform hover:scale-110' : ''} {animatesOnClick ? 'active:scale-90' : ''} {className} {size === 'sm' ? 'text-sm' : ''} {size === 'lg' ? 'text-lg' : ''}"
 	on:click={(e) => copyToClipboard(e, color.toString($outputFormat))}
   on:mouseenter={() => !alwaysShowColor ? textColor = color.textColor() : null}
 >

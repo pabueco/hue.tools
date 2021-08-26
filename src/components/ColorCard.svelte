@@ -8,6 +8,7 @@
 	import ColorPicker from './ColorPicker.svelte';
   import { clickOutside } from '$src/directives/clickoutside';
   import { Color } from '$src/models/Color';
+import { copyToClipboard } from '$src/utils/clipboard';
 
 	export let color: Color;
   export let deletable: boolean = false;
@@ -88,8 +89,9 @@
   {/if}
 
 	<div
-		class="absolute top-4 text-lg font-medium opacity-80 inset-x-0 text-center"
+		class="absolute top-4 text-lg font-medium opacity-80 transition hover:opacity-100 left-1/2 transform -translate-x-1/2 text-center"
 		style="color: {textColor};"
+    on:click={(e) => copyToClipboard(e, colorName)}
 	>
 		{colorName}
 	</div>

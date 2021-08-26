@@ -158,7 +158,7 @@
 						<h6 class="text-lg md:text-base font-medium mb-3">Analogous</h6>
 						<div class="flex flex-col space-y-2">
 							{#each combiAnalogous as color}
-								<ColorBlock {color} expands className="rounded-xl" />
+								<ColorBlock {color} expands size="sm" className="rounded-xl" />
 							{/each}
 						</div>
 					</div>
@@ -166,7 +166,7 @@
 						<h6 class="text-lg md:text-base font-medium mb-3">Monochromatic</h6>
 						<div class="flex flex-col space-y-2">
 							{#each combiMonochromatic as color}
-								<ColorBlock {color} expands className="rounded-xl" />
+								<ColorBlock {color} expands size="sm" className="rounded-xl" />
 							{/each}
 						</div>
 					</div>
@@ -174,7 +174,7 @@
 						<h6 class="text-lg md:text-base font-medium mb-3">Splitcomplement</h6>
 						<div class="flex flex-col space-y-2">
 							{#each combiSplitcomplement as color}
-								<ColorBlock {color} expands className="rounded-xl" />
+								<ColorBlock {color} expands size="sm" className="rounded-xl" />
 							{/each}
 						</div>
 					</div>
@@ -182,7 +182,7 @@
 						<h6 class="text-lg md:text-base font-medium mb-3">Triad</h6>
 						<div class="flex flex-col space-y-2">
 							{#each combiTriad as color}
-								<ColorBlock {color} expands className="rounded-xl" />
+								<ColorBlock {color} expands size="sm" className="rounded-xl" />
 							{/each}
 						</div>
 					</div>
@@ -190,7 +190,7 @@
 						<h6 class="text-lg md:text-base font-medium mb-3">Tetrad</h6>
 						<div class="flex flex-col space-y-2">
 							{#each combiTetrad as color}
-								<ColorBlock {color} expands className="rounded-xl" />
+								<ColorBlock {color} expands size="sm" className="rounded-xl" />
 							{/each}
 						</div>
 					</div>
@@ -198,14 +198,14 @@
 						<h6 class="text-lg md:text-base font-medium mb-3">Polyad</h6>
 						<div class="flex flex-col space-y-2">
 							{#each combiPolyad as color}
-								<ColorBlock {color} expands className="rounded-xl" />
+								<ColorBlock {color} expands size="sm" className="rounded-xl" />
 							{/each}
 						</div>
 					</div>
 					<div class="flex-1">
 						<h6 class="text-lg md:text-base font-bold mb-3">Complement</h6>
 						<div class="flex space-x-2">
-							<ColorBlock color={colorComplement} expands className="rounded-xl" />
+							<ColorBlock color={colorComplement} expands size="sm" className="rounded-xl" />
 						</div>
 					</div>
 				</div>

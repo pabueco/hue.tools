@@ -1,15 +1,15 @@
 // import { toast } from '@zerodevx/svelte-toast'
 import { sample } from 'lodash';
 
-export const copyToClipboard = (event: MouseEvent, text: string | number): void => {
+export const copyToClipboard = (event: MouseEvent, text: string | number, message?: string): void => {
   navigator.clipboard.writeText(String(text)).then(() => {
       // toast.push(message || `Copied: ${text}`);
-      onWindowClick(event);
+      onWindowClick(event, message);
     }
   )
 };
 
-const onWindowClick = (event: MouseEvent) => {
+const onWindowClick = (event: MouseEvent, message = 'Copied!') => {
   const el = document.createElement('div')
 
   el.style.position = 'fixed'
@@ -26,7 +26,7 @@ const onWindowClick = (event: MouseEvent) => {
   // el.style.boxShadow = 'rgb(0 0 0 / 50%) 0px 3px 2px'
   el.className =
     'rounded-lg px-2 py-1 font-medium text-sm tracking-wide shadow-md'
-  el.textContent = 'Copied!'
+  el.textContent = message
 
   const x = event.clientX
   const y = event.clientY
