@@ -5,10 +5,11 @@
 	import ColorSpace from '../components/ColorSpace.svelte';
 	import Fieldset from '../components/Fieldset.svelte';
 	import ColorBlock from '../components/ColorBlock.svelte';
-	import { primaryColor } from '../store';
+	import { outputFormat, primaryColor } from '../store';
 	import ColorCard from '$components/ColorCard.svelte';
 	import { getColorFromUrl, updateQuery } from '$src/utils/url';
 	import { Color } from '$src/models/Color';
+import { copyToClipboard } from '$src/utils/clipboard';
 
 	let queryColor = getColorFromUrl();
 
@@ -38,6 +39,33 @@
 	$: combiTetrad = new TinyColor(colorInstance.hex()).tetrad().map((c) => Color.fromTinyColor(c));
 	$: combiPolyad = new TinyColor(colorInstance.hex()).polyad(6).map((c) => Color.fromTinyColor(c));
 	$: colorComplement = Color.fromTinyColor(new TinyColor(colorInstance.hex()).complement());
+
+  $: colorCombinations = [
+    {
+      label: 'Analogous',
+      colors: combiAnalogous
+    },
+    {
+      label: 'Monochromatic',
+      colors: combiMonochromatic
+    },
+    {
+      label: 'Splitcomponent',
+      colors: combiSplitcomplement
+    },
+    {
+      label: 'Triad',
+      colors: combiTriad
+    },
+    {
+      label: 'Tetrad',
+      colors: combiTetrad
+    },
+    {
+      label: 'Polyad',
+      colors: combiPolyad
+    },
+  ]
 </script>
 
 <svelte:head>
@@ -154,62 +182,49 @@
 		<div class="mt-14 w-full">
 			<Fieldset label="Color Combinations">
 				<div class="gap-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:flex lg:gap-5">
-					<div class="flex-1">
-						<h6 class="text-lg md:text-base font-medium mb-3">Analogous</h6>
-						<div class="flex flex-col space-y-2">
-							{#each combiAnalogous as color}
-								<ColorBlock {color} expands size="sm" className="rounded-xl" />
-							{/each}
-						</div>
-					</div>
-					<div class="flex-1">
-						<h6 class="text-lg md:text-base font-medium mb-3">Monochromatic</h6>
-						<div class="flex flex-col space-y-2">
-							{#each combiMonochromatic as color}
-								<ColorBlock {color} expands size="sm" className="rounded-xl" />
-							{/each}
-						</div>
-					</div>
-					<div class="flex-1">
-						<h6 class="text-lg md:text-base font-medium mb-3">Splitcomplement</h6>
-						<div class="flex flex-col space-y-2">
-							{#each combiSplitcomplement as color}
-								<ColorBlock {color} expands size="sm" className="rounded-xl" />
-							{/each}
-						</div>
-					</div>
-					<div class="flex-1">
-						<h6 class="text-lg md:text-base font-medium mb-3">Triad</h6>
-						<div class="flex flex-col space-y-2">
-							{#each combiTriad as color}
-								<ColorBlock {color} expands size="sm" className="rounded-xl" />
-							{/each}
-						</div>
-					</div>
-					<div class="flex-1">
-						<h6 class="text-lg md:text-base font-medium mb-3">Tetrad</h6>
-						<div class="flex flex-col space-y-2">
-							{#each combiTetrad as color}
-								<ColorBlock {color} expands size="sm" className="rounded-xl" />
-							{/each}
-						</div>
-					</div>
-					<div class="flex-1">
-						<h6 class="text-lg md:text-base font-medium mb-3">Polyad</h6>
-						<div class="flex flex-col space-y-2">
-							{#each combiPolyad as color}
-								<ColorBlock {color} expands size="sm" className="rounded-xl" />
-							{/each}
-						</div>
-					</div>
-					<div class="flex-1">
-						<h6 class="text-lg md:text-base font-bold mb-3">Complement</h6>
-						<div class="flex space-x-2">
-							<ColorBlock color={colorComplement} expands size="sm" className="rounded-xl" />
-						</div>
-					</div>
+          {#each colorCombinations as combination, index (index) }
+            <div class="flex-1">
+              <div class="flex items-center justify-between mb-3">
+                <h6 class="text-lg md:text-base font-medium">{combination.label}</h6>
+
+                <button
+                  on:click={(e) => copyToClipboard(e, combination.colors.map(c => c.toString($outputFormat)).join('\n'))}
+                  class="opacity-40 transition hover:text-primary-clamped hover:opacity-100 ml-5"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              <div class="flex flex-col space-y-2">
+                {#each combination.colors as color}
+                  <ColorBlock {color} expands size="sm" className="rounded-xl" />
+                {/each}
+              </div>
+            </div>
+          {/each}
 				</div>
 			</Fieldset>
 		</div>
 	</div>
+
+  <div class="flex-1">
+    <h6 class="text-lg md:text-base font-bold mb-3">Complement</h6>
+    <div class="flex space-x-2">
+      <ColorBlock color={colorComplement} expands size="sm" className="rounded-xl" />
+    </div>
+  </div>
 </div>
+
