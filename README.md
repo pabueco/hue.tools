@@ -1,38 +1,45 @@
-# create-svelte
+# hue.tools
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte);
+hue.tools is web app that helps you to work with colors.
 
-## Creating a project
+Try it out: [hue.tools](https://hue.tools)
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Features
+
+- Mix
+  - Mix multiple colors and generate as many shades/steps between those colors as you want
+  - Switch the interpolation mode to change the way the colors are mixed
+- Blend
+  - Mix two colors using one of the 16 blend modes (multiply, color burn, soft light, exclusion, etc.)
+  - Change the alpha channel to make tiny adjustments
+- Info
+  - Convert a color to many different color spaces and formats
+  - Links to resources/stock images using the same color on platforms like Dribble, Behance and Pexels 
+  - Color combinations/harmonies like Triad, Analogous, Polyad
+  - Complementary color
+  - Name of the color using a [curated list of color names](https://www.npmjs.com/package/color-name-list)
+
+Tip: Change to output format on the top right to get exactly the color format/space you need when copying colors.
+
+## Tech
+
+- [Typescript](https://www.typescriptlang.org/)
+- [Svelte](https://svelte.dev)
+- [SvelteKit](https://kit.svelte.dev)
+- [Tailwind.css](https://tailwindcss.com/)
+
+Most of the color realted features in hue.tools are powered by [chroma.js](https://gka.github.io/chroma.js/) and [tinycolor](https://www.npmjs.com/package/@ctrl/tinycolor).
+
+## Contributing
+
+Contributions are always welcome!
+
+## Development
 
 ```bash
-# create a new project in the current directory
-npm init svelte@next
+# Install dependencies.
+yarn
 
-# create a new project in my-app
-npm init svelte@next my-app
+# Start the dev server and open the app in a new browser tab.
+yarn dev --open
 ```
-
-> Note: the `@next` is temporary
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-Before creating a production version of your app, install an [adapter](https://kit.svelte.dev/docs#adapters) for your target environment. Then:
-
-```bash
-npm run build
-```
-
-> You can preview the built app with `npm run preview`, regardless of whether you installed an adapter. This should _not_ be used to serve your app in production.
