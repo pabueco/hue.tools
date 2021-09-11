@@ -1,15 +1,28 @@
 // import { toast } from '@zerodevx/svelte-toast'
 import { sample } from 'lodash';
 
+/**
+ * Copy a piece of text to the clipboard.
+ * 
+ * @param event The native MouseEvent
+ * @param text The text to copy to the clipboard
+ * @param message The success message to display afterwards
+ */
 export const copyToClipboard = (event: MouseEvent, text: string | number, message?: string): void => {
   navigator.clipboard.writeText(String(text)).then(() => {
       // toast.push(message || `Copied: ${text}`);
-      onWindowClick(event, message);
+      showFloatingTooltip(event, message);
     }
   )
 };
 
-const onWindowClick = (event: MouseEvent, message = 'Copied!') => {
+/**
+ * Shows a little floating tooltip thing that disappears after a few seconds.
+ * 
+ * @param event The native MouseEvent
+ * @param message The text to show
+ */
+const showFloatingTooltip = (event: MouseEvent, message = 'Copied!') => {
   const el = document.createElement('div')
 
   el.style.position = 'fixed'

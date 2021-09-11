@@ -28,6 +28,5 @@
   on:mouseenter={() => !alwaysShowColor ? textColor = color.textColor() : null}
 >
   <span class="{!alwaysShowColor ? 'opacity-0 scale-75' : ''} transform group-hover:opacity-100 group-hover:scale-100 font-medium" style="transition: opacity 150ms, transform 150ms;">{color.toString($outputFormat)}</span>
-
   <slot />
 </div>
