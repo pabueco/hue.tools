@@ -210,8 +210,10 @@
 									on:click={(e) =>
 										copyToClipboard(
 											e,
-											combination.colors.map((c) => c.toString($outputFormat)).join('\n')
+											combination.colors.map((c) => c.toString($outputFormat)).join('\n'),
+                      'Colors copied!'
 										)}
+                  title="Copy colors"
 									class="opacity-40 transition hover:text-primary-clamped hover:opacity-100 ml-5"
 								>
 									<svg

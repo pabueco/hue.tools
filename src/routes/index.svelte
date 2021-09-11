@@ -199,8 +199,9 @@
 					</button>
 
 					<button
-						on:click={(e) => copyToClipboard(e, colorList)}
+						on:click={(e) => copyToClipboard(e, colorList, 'Colors copied!')}
 						class="transition hover:text-primary-clamped ml-5"
+            title="Copy all shades/steps"
 					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
