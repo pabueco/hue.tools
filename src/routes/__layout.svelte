@@ -119,7 +119,7 @@
 	</div>
 
 	<div
-		class="flex-1 flex flex-col relative z-10 bg-gray-900 text-white rounded-2xl shadow-lg p-6 md:p-10"
+		class="flex-1 flex flex-col relative z-10 bg-gray-900 text-white rounded-2xl shadow-lg p-6 md:p-10 pb-8 md:pb-12"
 	>
 		<slot />
 	</div>

@@ -241,7 +241,7 @@
 				expands
 				alwaysShowColor
 				size="lg"
-				className="rounded-2xl min-h-[100px]"
+				className="rounded-2xl min-h-[150px]"
         showName
 			>
 				<a
@@ -271,7 +271,7 @@
 	<div class="mt-16">
 		<Fieldset label="Settings">
 			<Field label="Interpolation Mode" hoverable={false}>
-				<div class="flex space-x-5 mt-2">
+				<div class="flex space-x-3.5 md:space-x-5 mt-2">
 					{#each modes as type}
 						<button
 							class="uppercase font-medium tracking-wider transition text-xl {mode === type

@@ -102,7 +102,7 @@
 				expands
 				alwaysShowColor
 				size="lg"
-				className="rounded-2xl min-h-[100px]"
+				className="rounded-2xl min-h-[150px]"
         showName
 			>
 				<a
