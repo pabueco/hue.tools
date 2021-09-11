@@ -181,7 +181,7 @@ import { copyToClipboard } from '$src/utils/clipboard';
 
 		<div class="mt-14 w-full">
 			<Fieldset label="Color Combinations">
-				<div class="gap-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:flex lg:gap-5">
+				<div class="gap-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:flex xl:gap-5">
           {#each colorCombinations as combination, index (index) }
             <div class="flex-1">
               <div class="flex items-center justify-between mb-3">
