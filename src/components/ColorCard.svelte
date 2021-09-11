@@ -94,7 +94,7 @@
 	<div
 		class="absolute top-4 text-lg font-medium opacity-80 transition hover:opacity-100 left-1/2 transform -translate-x-1/2 text-center"
 		style="color: {textColor};"
-		on:click={(e) => copyToClipboard(e, colorName)}
+		on:click={(e) => copyToClipboard(e, colorName, 'Name copied!')}
 	>
 		{colorName}
 	</div>
