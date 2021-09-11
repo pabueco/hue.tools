@@ -3,7 +3,7 @@
 
 	import chroma, { InterpolationMode } from 'chroma-js';
 
-	import { primaryColor } from '../store';
+	import { outputFormat, primaryColor } from '../store';
 	import ColorCard from '$src/components/ColorCard.svelte';
   import Fieldset from '$src/components/Fieldset.svelte';
   import ColorSpace from '$src/components/ColorSpace.svelte';
@@ -11,6 +11,7 @@
   import Field from '$src/components/Field.svelte';
   import { Color } from '$src/models/Color';
   import ColorBlock from '$src/components/ColorBlock.svelte';
+  import { copyToClipboard } from '$src/utils/clipboard';
 
 	let queryColors = getColorsFromUrl();  
 
@@ -34,6 +35,8 @@
 	$: $primaryColor = averageColor;
 
 	$: gradient = colorSteps.join(', ');
+
+  $: colorList = colorSteps.map(c => c.toString($outputFormat)).join('\n')
 
 	const removeColor = (index: number) => {
 		colorInstances = colorInstances.filter((_, i) => i !== index);
@@ -112,7 +115,9 @@
   
     <div class="flex flex-col flex-1 order-3 lg:order-2">
       <div class="flex items-center justify-between mb-6">
-        <h2 class="font-bold text-2xl">Steps</h2>
+        <div class="flex items-center space-x-2">
+          <h2 class="font-bold text-2xl">Steps</h2>
+        </div>
 
         <div class="flex items-center">
           <div class="flex justify-between">
@@ -171,6 +176,12 @@
                 stroke-width="2"
                 d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
               />
+            </svg>
+          </button>
+
+          <button on:click={(e) => copyToClipboard(e, colorList)} class="transition hover:text-primary-clamped ml-5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
             </svg>
           </button>
         </div>
