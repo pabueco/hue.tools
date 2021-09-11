@@ -15,11 +15,11 @@ export class Color {
     }
   }
 
-  public toString(format?: ColorFormats | string): string {
+  public toString(format?: ColorFormats | string, ): string {
      if (format === 'hsi') {
       return this.chroma.hsi().toString()
     } else if (format === 'lab') {
-      return this.chroma.lab().toString()
+      return this.chroma.lab().map(n => n.toFixed(3)).toString()
     }
 
     return this.tinycolor.toString((format as ColorFormats) || this.tinycolor.format)
