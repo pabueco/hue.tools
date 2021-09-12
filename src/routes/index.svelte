@@ -272,7 +272,7 @@
 	<div class="mt-16">
 		<Fieldset label="Settings">
 			<Field label="Interpolation Mode" hoverable={false}>
-				<div class="flex space-x-3.5 md:space-x-5 mt-2">
+				<div class="flex flex-wrap gap-x-3.5 md:gap-x-5 mt-2">
 					{#each modes as type}
 						<button
 							class="uppercase font-medium tracking-wider transition text-xl {mode === type
