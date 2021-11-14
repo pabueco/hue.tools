@@ -1,4 +1,5 @@
-import { ColorFormats, mostReadable, TinyColor } from "@ctrl/tinycolor";
+import { mostReadable, TinyColor } from "@ctrl/tinycolor";
+import type { ColorFormats } from "@ctrl/tinycolor";
 import chroma from "chroma-js";
 
 export class Color {
