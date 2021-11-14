@@ -115,7 +115,7 @@
 									target="_blank"
 								>
 									<img
-										src="https://cdn.dribbble.com/assets/favicon-b38525134603b9513174ec887944bde1a869eb6cd414f4d640ee48ab2a15a26b.ico"
+                    src="/icons/dribbble.ico"
 										class="h-5 mr-2.5"
 										alt=""
 									/>
@@ -129,7 +129,7 @@
 									target="_blank"
 								>
 									<img
-										src="https://a5.behance.net/8dac56884dc995cee3717be798eec3e8f86a501c/img/site/favicon.ico?cb=264615658"
+										src="/icons/behance.ico"
 										class="h-5 mr-2.5 rounded"
 										alt=""
 									/>
@@ -143,7 +143,7 @@
 									target="_blank"
 								>
 									<img
-										src="https://s.dspncdn.com/a1/webapp/img/favicons/favicon-32x32.png"
+                    src="/icons/designspiration.png"
 										class="h-5 mr-2.5 rounded"
 										alt=""
 									/>
@@ -163,7 +163,7 @@
 										.replace('#', '')}"
 									target="_blank"
 								>
-									<img src="https://www.pexels.com/favicon.ico" class="h-6 mr-2.5 rounded" alt="" />
+									<img src="/icons/pexels.ico" class="h-6 mr-2.5 rounded" alt="" />
 									Pexels
 								</a>
 								<a
@@ -173,7 +173,7 @@
 										.replace('#', '')}"
 									target="_blank"
 								>
-									<img src="http://labs.tineye.com/favicon.ico" class="h-5 mr-2.5 rounded" alt="" />
+									<img src="/icons/tineye.ico" class="h-5 mr-2.5 rounded" alt="" />
 									TinEye Search Engine
 								</a>
 							</div>
