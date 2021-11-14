@@ -1,6 +1,8 @@
 {
 	"name": "hue-tools",
 	"version": "0.0.1",
+  "author": "pabueco",
+  "license": "MIT",
 	"scripts": {
 		"dev": "svelte-kit dev",
 		"build": "svelte-kit build",
