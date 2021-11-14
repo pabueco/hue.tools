@@ -11,7 +11,7 @@
   let slider
 
   const onInput = (event) => {
-    const newValue = event.target.value
+    const newValue = parseInt(event.target.value)
     value = newValue
     slider.set(newValue)
   }
