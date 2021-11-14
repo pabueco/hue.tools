@@ -17,6 +17,8 @@
 		updateQuery('color', colorInstance.toString(initialFormat));
 	};
 
+  onColorChange()
+
   let lightenValue = 0
   let brightenValue = 0
   let darkenValue = 0
