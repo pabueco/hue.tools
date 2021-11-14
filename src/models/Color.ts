@@ -42,7 +42,7 @@ export class Color {
 
   public textColor(): string {
     if (!this.computedTextColor) {
-      this.computedTextColor = mostReadable(this.chroma.hex(), ['#fff', '#000']).toHexString()
+      this.computedTextColor = mostReadable(this.toString('hex'), ['#fff', '#000']).toHexString()
     }
 
     return this.computedTextColor

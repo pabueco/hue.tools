@@ -19,7 +19,8 @@ const config = {
       },
 
       fontFamily: {
-        sans: ['DM Sans', ...defaultTheme.fontFamily.sans]
+        sans: ['DM Sans', ...defaultTheme.fontFamily.sans],
+        mono: ['JetBrains Mono', ...defaultTheme.fontFamily.sans],
       },
 
       animation: {
