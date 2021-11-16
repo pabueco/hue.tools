@@ -45,8 +45,8 @@
 	<title>hue.tools – modify</title>
 </svelte:head>
 
-<div class="xl:grid grid-cols-4 gap-10 container mx-auto">
-  <div class="flex flex-col">
+<div class="flex flex-col xl:grid grid-cols-4 gap-10 container mx-auto">
+  <div class="flex flex-col order-1">
     <h2 class="font-bold text-2xl mb-6">Your colors</h2>
     <ColorCard
       deletable={false}
@@ -56,9 +56,9 @@
     />
   </div>
 
-  <div class="col-span-2 my-10 xl:my-0">
+  <div class="col-span-2 my-10 xl:my-0 order-last xl:order-2">
     <h2 class="font-bold text-2xl mb-6">Modifiers</h2>
-    <div class="grid grid-cols-2 gap-5 gap-y-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 gap-y-8">
       <Modifier name="Brighten" bind:value={brightenValue}>
         <div slot="description">Increase the brightness</div>
       </Modifier>
@@ -86,7 +86,7 @@
     </div>
   </div>
 
-  <div class="flex flex-col">
+  <div class="flex flex-col order-3">
     <h2 class="font-bold text-2xl mb-6">Result</h2>
     <ColorBlock
       color={finalColor}
