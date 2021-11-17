@@ -30,8 +30,6 @@ const showFloatingTooltip = (event: MouseEvent, message = 'Copied!') => {
   el.style.transition = 'all 250ms cubic-bezier(0.34, 1.56, 0.64, 1)'
   el.style.transform = `translateX(-50%) scale(0) rotate(${sample([-25, -12.5, 12.5, 25])}deg)`
   el.style.pointerEvents = 'none'
-  // el.style.backgroundColor = get(complementColor)
-  // el.style.color = new Color(get(complementColor)).textColor()
 
   el.style.backgroundColor = '#fff'
   el.style.color = '#000'

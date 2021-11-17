@@ -7,8 +7,8 @@
 
 	import { page } from '$app/stores';
 	import { browser, dev } from '$app/env';
-	import { complementColor, outputFormat, primaryColor, primaryColorClamped } from '../store';
-	import { onDestroy, onMount } from 'svelte';
+	import { complementColor, complementColorClamped, outputFormat, primaryColor, primaryColorClamped } from '../store';
+	import { onMount } from 'svelte';
 	import { copyToClipboard } from '$src/utils/clipboard';
 	import { Color } from '$src/models/Color';
 
@@ -31,7 +31,7 @@
 
 <div
 	class="min-h-screen flex flex-col p-4 md:p-6"
-	style="--color-primary: {$primaryColor}; --color-primary-clamped: {$primaryColorClamped}; --color-complement: {$complementColor}"
+	style="--color-primary: {$primaryColor}; --color-primary-clamped: {$primaryColorClamped}; --color-complement: {$complementColor}; --color-complement-clamped: {$complementColorClamped};"
 >
 	<!-- <div
 		class="absolute inset-0 opacity-50"
@@ -124,7 +124,7 @@
 
 	<div
 		class="flex items-center justify-center space-x-4 pt-4 relative z-10"
-		style="color: {new Color($complementColor).textColor()}"
+		style="color: {$complementColor.textColor()}"
 	>
 		<a href="https://github.com/pabueco/hue.tools" target="_blank">
 			<svg
@@ -150,8 +150,8 @@
 </div>
 
 <style>
-	*::selection {
-		background: var(--color-complement);
+	:global *::selection {
+		background: var(--color-complement-clamped);
 		color: var(--color-primary);
 	}
 </style>
