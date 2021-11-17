@@ -8,7 +8,7 @@
 	import Fieldset from '$src/components/Fieldset.svelte';
 	import { Color } from '$src/models/Color';
 	import { primaryColor } from '$src/store';
-	import { getColorsFromUrl, updateQuery } from '$src/utils/url';
+	import { getColorsFromUrl, getQueryParam, updateQuery } from '$src/utils/url';
 	import * as blend from 'color-blend';
 
 	let modes = [
@@ -30,7 +30,9 @@
 		{ id: 'luminosity', name: 'luminosity' }
 	];
 
-	let mode = 'normal';
+	let mode = getQueryParam('mode', 'normal');
+
+  $: updateQuery('mode', mode)
 
 	let colorInstances: Color[] = getColorsFromUrl() || [Color.random(0.5), Color.random(0.5)];
 

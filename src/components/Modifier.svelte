@@ -1,4 +1,6 @@
 <script lang="ts">
+import { createEventDispatcher } from "svelte";
+
   import Fieldset from "./Fieldset.svelte";
 
   import Slider from "./Slider.svelte";
@@ -15,6 +17,8 @@
     value = newValue
     slider.set(newValue)
   }
+
+  const dispatch = createEventDispatcher();
 
 </script>
 
@@ -35,6 +39,6 @@
     </div>
   </div>
   <div class="mt-4">
-    <Slider bind:this={slider} slot="slider" on:slide={e => value = parseInt(e.detail.values)} {...sliderProps} />
+    <Slider bind:this={slider} slot="slider" start={value} on:slide={e => value = parseInt(e.detail.values)} {...sliderProps} on:change={e => dispatch('change', e.detail)} />
   </div>
 </Fieldset>

@@ -6,9 +6,14 @@ import { Color } from "$src/models/Color";
  */
 export const updateQuery = (key: string, value: string | string[]): void => {
 
+  if (!value) return
+
   const paramValue = Array.isArray(value) ? value.join(';') : value
 
-  goto(`?${key}=${paramValue.replace(/#/g, '')}`, {
+  const searchParams = new URLSearchParams(location.search);
+  searchParams.set(key, paramValue.replace(/#/g, ''))
+
+  goto('?' + searchParams.toString(), {
     keepfocus: true,
     replaceState: true,
     noscroll: true
@@ -40,4 +45,12 @@ export const getColorsFromUrl = (key = 'colors'): Color[] | undefined => {
  */
 export const getColorFromUrl = (key = 'color'): Color | undefined => {
   return getColorsFromUrl(key)?.[0] || undefined
+}
+
+/**
+ * Extract multiple colors from the URL.  
+ */
+ export const getQueryParam = (key: string, fallback = null): string => {
+  const query = new URLSearchParams(location.search)
+  return query.get(key) || fallback
 }

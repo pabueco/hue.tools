@@ -11,6 +11,7 @@
 	import { onMount } from 'svelte';
 	import { copyToClipboard } from '$src/utils/clipboard';
 	import { Color } from '$src/models/Color';
+  import { updateQuery } from '$src/utils/url';
 
 	onMount(() => {
 		$outputFormat = localStorage.getItem('format') || 'hex';
@@ -18,7 +19,17 @@
 
 	$: if (browser && localStorage && $outputFormat) {
 		localStorage.setItem('format', $outputFormat);
+    updateQuery('format', $outputFormat)
 	}
+
+  let generalQueryString = ''
+
+  $: if ($page.path) {
+    const query = new URLSearchParams()
+    query.set('format', $outputFormat)
+    
+    generalQueryString = `?${query.toString()}`
+  }
 </script>
 
 <svelte:head>
@@ -108,10 +119,10 @@
 			<div
 				class="self-center flex items-center justify-center space-x-4 text-xl font-medium order-last flex-basis-[100%] md:order-none relative z-10"
 			>
-				<a href="/" class={$page.path === '/' ? 'text-primary-clamped' : ''}>Mix</a>
-				<a href="/info" class={$page.path === '/info' ? 'text-primary-clamped' : ''}>Info</a>
-				<a href="/blend" class={$page.path === '/blend' ? 'text-primary-clamped' : ''}>Blend</a>
-				<a href="/modify" class={$page.path === '/modify' ? 'text-primary-clamped' : ''}>Modify</a>
+				<a href={'/' + generalQueryString} class={$page.path === '/' ? 'text-primary-clamped' : ''}>Mix</a>
+				<a href={'info' + generalQueryString} class={$page.path === '/info' ? 'text-primary-clamped' : ''}>Info</a>
+				<a href={'blend' + generalQueryString} class={$page.path === '/blend' ? 'text-primary-clamped' : ''}>Blend</a>
+				<a href={'modify' + generalQueryString} class={$page.path === '/modify' ? 'text-primary-clamped' : ''}>Modify</a>
 			</div>
 		</div>
 	</div>

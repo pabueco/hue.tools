@@ -7,7 +7,7 @@
 	import ColorCard from '$src/components/ColorCard.svelte';
 	import Fieldset from '$src/components/Fieldset.svelte';
 	import ColorSpace from '$src/components/ColorSpace.svelte';
-	import { getColorsFromUrl, updateQuery } from '$src/utils/url';
+	import { getColorsFromUrl, getQueryParam, updateQuery } from '$src/utils/url';
 	import Field from '$src/components/Field.svelte';
 	import { Color } from '$src/models/Color';
 	import ColorBlock from '$src/components/ColorBlock.svelte';
@@ -17,11 +17,21 @@
 
 	let colorInstances: Color[] = queryColors || [Color.random(), Color.random()];
 
-	let stepsCount = Number(localStorage.getItem('steps')) || 10;
+	let stepsCount = Number(getQueryParam('steps', localStorage.getItem('steps'))) || 10;
 
-	let showStepsAsGradient = false;
+  $: if (stepsCount) {
+    updateQuery('steps', stepsCount.toString())
+  }
 
-	let mode: InterpolationMode = (localStorage.getItem('mode') || 'lch') as InterpolationMode;
+	let showStepsAsGradient = getQueryParam('view') === 'gradient';
+
+  $: updateQuery('view', showStepsAsGradient ? 'gradient' : 'steps')
+
+	let mode: InterpolationMode = (getQueryParam('mode') || localStorage.getItem('mode') || 'lch') as InterpolationMode;
+
+  $: if (mode) {
+    updateQuery('mode', mode)
+  }
 
 	$: localStorage.setItem('mode', mode);
 	$: localStorage.setItem('steps', stepsCount.toString());

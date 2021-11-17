@@ -50,6 +50,9 @@
 		slider.noUiSlider.on('slide', (values, handle, unencoded, tap, positions) =>
 			dispatch('slide', { values, handle, unencoded, tap, positions })
 		);
+		slider.noUiSlider.on('change', (values, handle, unencoded, tap, positions) =>
+			dispatch('change', { values, handle, unencoded, tap, positions })
+		);
 	});
 </script>
 
