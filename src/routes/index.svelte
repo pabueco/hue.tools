@@ -17,6 +17,10 @@
   $: colorHex = $primaryColor.toString('hex')
 </script>
 
+<svelte:head>
+	<title>hue.tools</title>
+</svelte:head>
+
 <div class="flex-1 flex flex-col items-center justify-center relative">
 	<div class="text-center">
 		<h1 class="text-8xl font-bold mb-3 text-primary-clamped transition">hue.tools</h1>
