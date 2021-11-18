@@ -18,7 +18,7 @@ export const complementColor: Readable<Color | undefined> = derived(primaryColor
  * The color used for text on top of the primary color.
  * It's either black or white.
  */
-export const primaryColorText: Readable<string> = derived(primaryColor, ($primaryColor) => $primaryColor.textColor())
+export const primaryColorText: Readable<string> = derived(primaryColor, ($primaryColor) => $primaryColor && $primaryColor.textColor())
 
 /**
  * The primary color but fixed the a certain brightness that is always readable.

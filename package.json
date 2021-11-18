@@ -47,6 +47,7 @@
 		"color-blend": "^3.0.1",
 		"color-name-list": "^8.13.0",
 		"lodash": "^4.17.21",
+		"lodash-es": "^4.17.21",
 		"nearest-color": "^0.4.4",
 		"nouislider": "^15.5.0"
 	}

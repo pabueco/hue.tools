@@ -7,11 +7,17 @@
 
 	import { page } from '$app/stores';
 	import { browser, dev } from '$app/env';
-	import { complementColor, complementColorClamped, outputFormat, primaryColor, primaryColorClamped } from '../store';
+	import {
+		complementColor,
+		complementColorClamped,
+		outputFormat,
+		primaryColor,
+		primaryColorClamped,
+    primaryColorText
+	} from '../store';
 	import { onMount } from 'svelte';
 	import { copyToClipboard } from '$src/utils/clipboard';
-	import { Color } from '$src/models/Color';
-  import { updateQuery } from '$src/utils/url';
+	import { updateQuery } from '$src/utils/url';
 
 	onMount(() => {
 		$outputFormat = localStorage.getItem('format') || 'hex';
@@ -19,17 +25,17 @@
 
 	$: if (browser && localStorage && $outputFormat) {
 		localStorage.setItem('format', $outputFormat);
-    updateQuery('format', $outputFormat)
+		updateQuery('format', $outputFormat);
 	}
 
-  let generalQueryString = ''
+	let generalQueryString = '';
 
-  $: if ($page.path) {
-    const query = new URLSearchParams()
-    query.set('format', $outputFormat)
-    
-    generalQueryString = `?${query.toString()}`
-  }
+	$: if ($page.path) {
+		const query = new URLSearchParams();
+		query.set('format', $outputFormat);
+
+		generalQueryString = `?${query.toString()}`;
+	}
 </script>
 
 <svelte:head>
@@ -42,90 +48,109 @@
 
 <div
 	class="min-h-screen flex flex-col p-4 md:p-6"
-	style="--color-primary: {$primaryColor}; --color-primary-clamped: {$primaryColorClamped}; --color-complement: {$complementColor}; --color-complement-clamped: {$complementColorClamped};"
+	style="
+    --color-primary: {$primaryColor}; 
+    --color-primary-clamped: {$primaryColorClamped}; 
+    --color-primary-text: {$primaryColorText}; 
+    --color-complement: {$complementColor}; 
+    --color-complement-clamped: {$complementColorClamped};"
 >
 	<!-- <div
 		class="absolute inset-0 opacity-50"
 		style="background: linear-gradient(to right, {gradient});"
 	/> -->
 
-	<div class="fixed inset-0" style="background: {$primaryColor?.hex()};" />
+	<div class="fixed inset-0 transition" style="background: {$primaryColor?.hex()};" />
 
-	<div class="bg-gray-900 rounded-2xl mb-3 relative z-10 text-white">
-		<div class="px-6 md:px-10 py-6 flex flex-col justify-center relative">
-			<div
-				class="relative md:absolute md:inset-x-10 w-full md:w-auto flex items-center justify-between"
-			>
-				<div class="flex items-center">
-					<a href="/" class="text-2xl md:text-3xl font-medium text-primary-clamped">hue.tools</a>
-					<button
-						on:click={() => (location.search = '')}
-						class="ml-5 hover:text-primary-clamped transition hover:animate-spin-reverse"
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							class="h-6 w-6"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke="currentColor"
+	{#if $page.path !== '/'}
+		<div class="bg-gray-900 rounded-2xl mb-3 relative z-10 text-white">
+			<div class="px-6 md:px-10 py-6 flex flex-col justify-center relative">
+				<div
+					class="relative md:absolute md:inset-x-10 w-full md:w-auto flex items-center justify-between"
+				>
+					<div class="flex items-center">
+						<a href="/" class="text-2xl md:text-3xl font-medium text-primary-clamped">hue.tools</a>
+						<button
+							on:click={() => (location.search = '')}
+							class="ml-5 hover:text-primary-clamped transition hover:animate-spin-reverse"
 						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-							/>
-						</svg>
-					</button>
-					<button
-						on:click={(e) => copyToClipboard(e, window.location.href)}
-						class="ml-5 hover:text-primary-clamped transition"
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							class="h-6 w-6"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke="currentColor"
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								class="h-6 w-6"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+								/>
+							</svg>
+						</button>
+						<button
+							on:click={(e) => copyToClipboard(e, window.location.href)}
+							class="ml-5 hover:text-primary-clamped transition"
 						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
-							/>
-						</svg>
-					</button>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								class="h-6 w-6"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+								/>
+							</svg>
+						</button>
+					</div>
+
+					<div class="flex items-center">
+						<label for="" class="mr-3 hidden md:block">Output format:</label>
+						<select
+							bind:value={$outputFormat}
+							class="bg-gray-700 transition hover:bg-gray-600 focus:outline-none px-2 py-1 rounded-md cursor-pointer"
+						>
+							<option value="hex" class="bg-transparent">HEX</option>
+							<option value="rgb">RGB</option>
+							<option value="hsl">HSL</option>
+							<option value="hsv">HSV</option>
+							<option value="hsi">HSI</option>
+							<option value="lab">LAB</option>
+						</select>
+					</div>
 				</div>
 
-				<div class="flex items-center">
-					<label for="" class="mr-3 hidden md:block">Output format:</label>
-					<select
-						bind:value={$outputFormat}
-						class="bg-gray-700 transition hover:bg-gray-600 focus:outline-none px-2 py-1 rounded-md cursor-pointer"
+				<div class="bg-gray-800 block md:hidden h-px my-5 -mx-6" />
+
+				<div
+					class="self-center flex items-center justify-center space-x-4 text-xl font-medium order-last flex-basis-[100%] md:order-none relative z-10"
+				>
+					<a
+						href={'/mix' + generalQueryString}
+						class={$page.path === '/mix' ? 'text-primary-clamped' : ''}>Mix</a
 					>
-						<option value="hex" class="bg-transparent">HEX</option>
-						<option value="rgb">RGB</option>
-						<option value="hsl">HSL</option>
-						<option value="hsv">HSV</option>
-						<option value="hsi">HSI</option>
-						<option value="lab">LAB</option>
-					</select>
+					<a
+						href={'/info' + generalQueryString}
+						class={$page.path === '/info' ? 'text-primary-clamped' : ''}>Info</a
+					>
+					<a
+						href={'/blend' + generalQueryString}
+						class={$page.path === '/blend' ? 'text-primary-clamped' : ''}>Blend</a
+					>
+					<a
+						href={'/modify' + generalQueryString}
+						class={$page.path === '/modify' ? 'text-primary-clamped' : ''}>Modify</a
+					>
 				</div>
-			</div>
-
-			<div class="bg-gray-800 block md:hidden h-px my-5 -mx-6" />
-
-			<div
-				class="self-center flex items-center justify-center space-x-4 text-xl font-medium order-last flex-basis-[100%] md:order-none relative z-10"
-			>
-				<a href={'/' + generalQueryString} class={$page.path === '/' ? 'text-primary-clamped' : ''}>Mix</a>
-				<a href={'info' + generalQueryString} class={$page.path === '/info' ? 'text-primary-clamped' : ''}>Info</a>
-				<a href={'blend' + generalQueryString} class={$page.path === '/blend' ? 'text-primary-clamped' : ''}>Blend</a>
-				<a href={'modify' + generalQueryString} class={$page.path === '/modify' ? 'text-primary-clamped' : ''}>Modify</a>
 			</div>
 		</div>
-	</div>
+	{/if}
 
 	<div
 		class="flex-1 flex flex-col relative z-10 bg-gray-900 text-white rounded-2xl shadow-lg p-6 md:p-10 pb-8 md:pb-12"
@@ -135,7 +160,7 @@
 
 	<div
 		class="flex items-center justify-center space-x-4 pt-4 relative z-10"
-		style="color: {$complementColor.textColor()}"
+		style="color: {$primaryColorText}"
 	>
 		<a href="https://github.com/pabueco/hue.tools" target="_blank">
 			<svg
@@ -145,7 +170,7 @@
 				version="1.1"
 				width="24"
 				data-view-component="true"
-        fill="currentColor"
+				fill="currentColor"
 			>
 				<path
 					fill-rule="evenodd"
