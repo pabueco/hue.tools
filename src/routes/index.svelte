@@ -4,7 +4,7 @@
 
 	import { primaryColor } from '$src/store';
   import { copyToClipboard } from '$src/utils/clipboard';
-  import { slide } from 'svelte/transition';
+  // import { slide } from 'svelte/transition';
 
 	$primaryColor = Color.random();
 
@@ -38,7 +38,6 @@
   {#key colorHex}
     <div
       on:click={e => copyToClipboard(e, colorHex)}
-      transition:slide
       class="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-primary-clamped font-medium tracking-wide font-mono cursor-pointer text-sm">
       {colorHex}
     </div>
