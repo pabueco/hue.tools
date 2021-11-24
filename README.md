@@ -18,6 +18,9 @@ Try it out: [hue.tools](https://hue.tools)
   - Color combinations/harmonies like Triad, Analogous, Polyad
   - Complementary color
   - Name of the color using a [curated list of color names](https://www.npmjs.com/package/color-name-list)
+- Modify
+  - Adjust a color by combining 8 different modifiers
+  - Available modifiers: Brighten, Darken, Tint, Shade, Desaturate, Saturate, Lighten and Spin
 
 Tip: Change to output format on the top right to get exactly the color format/space you need when copying colors.
 
