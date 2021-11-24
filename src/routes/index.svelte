@@ -23,18 +23,18 @@
 
 <div class="flex-1 flex flex-col items-center justify-center relative">
 	<div class="text-center">
-		<h1 class="text-8xl font-bold mb-3 text-primary-clamped transition">hue.tools</h1>
-		<p class="text-xl text-gray-400">An <a href="https://github.com/pabueco/hue.tools" class="text-gray-300 hover:text-primary-clamped transition" target="_blank">open source</a> toolbox for colors.</p>
+		<h1 class="text-5xl sm:text-7xl md:text-8xl font-bold mb-3 text-primary-clamped transition">hue.tools</h1>
+		<p class="text-base sm:text-xl text-gray-400">An <a href="https://github.com/pabueco/hue.tools" class="text-gray-300 hover:text-primary-clamped transition" target="_blank">open source</a> toolbox for colors.</p>
 	</div>
 
-	<div class="grid grid-cols-4 mt-14 gap-5">
+	<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mt-8 sm:mt-14 gap-3 sm:gap-5">
 		{#each tools as tool}
 			<a
 				href={'/' + tool}
 				class="transition transform hover:-translate-y-1 border border-gray-800 rounded-lg hover:bg-primary hover:text-primary-text hover:border-primary hover:shadow-xl uppercase px-8 py-4 text-center"
         on:mouseenter={handleMouseEnter}
 			>
-				<span class="font-semibold text-lg tracking-widest">{tool}</span>
+				<span class="font-semibold text-base sm:text-lg tracking-widest">{tool}</span>
 			</a>
 		{/each}
 	</div>
