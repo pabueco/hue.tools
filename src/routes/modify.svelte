@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+  import { page } from '$app/stores';
 
 	import ColorBlock from '$src/components/ColorBlock.svelte';
 	import ColorCard from '$src/components/ColorCard.svelte';
@@ -21,7 +22,6 @@
 
 	onColorChange();
 
-  
   const modifiers = {
     brighten: 0,
     darken: 0,
@@ -32,8 +32,8 @@
     lighten: 0,
     spin: 0
   }
-  
-  const query = new URLSearchParams(location.search);
+
+  const query = new URLSearchParams($page.url.search);
   for (const key in modifiers) {
     modifiers[key] = Number(query.get(key) || 0)
   }
@@ -51,7 +51,7 @@
 	);
 
 	const onChange = () => {
-		const query = new URLSearchParams(location.search);
+		const query = new URLSearchParams($page.url.search);
 
     for (const [key, value] of Object.entries(modifiers)) {
       query.set(key, value.toString());

@@ -19,7 +19,6 @@ const config = {
     prerender: {
       enabled: false
     },
-    ssr: false,
 
     vite: {
       resolve: {

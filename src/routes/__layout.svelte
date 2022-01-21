@@ -30,7 +30,7 @@
 
 	let generalQueryString = '';
 
-	$: if ($page.path) {
+	$: if ($page.url.pathname) {
 		const query = new URLSearchParams();
 		query.set('format', $outputFormat);
 
@@ -62,7 +62,7 @@
 
 	<div class="fixed inset-0 transition" style="background: {$primaryColor?.hex()};" />
 
-	{#if $page.path !== '/'}
+	{#if $page.url.pathname !== '/'}
 		<div class="bg-gray-900 rounded-2xl mb-3 relative z-10 text-white">
 			<div class="px-6 md:px-10 py-6 flex flex-col justify-center relative">
 				<div
@@ -71,7 +71,7 @@
 					<div class="flex items-center">
 						<a href="/" class="text-2xl md:text-3xl font-medium text-primary-clamped">hue.tools</a>
 						<button
-							on:click={() => (location.search = '')}
+							on:click={() => ($page.url.search = '')}
 							class="ml-5 hover:text-primary-clamped transition hover:animate-spin-reverse"
 						>
 							<svg
@@ -133,19 +133,19 @@
 				>
 					<a
 						href={'/mix' + generalQueryString}
-						class={$page.path === '/mix' ? 'text-primary-clamped' : ''}>Mix</a
+						class={$page.url.pathname === '/mix' ? 'text-primary-clamped' : ''}>Mix</a
 					>
 					<a
 						href={'/info' + generalQueryString}
-						class={$page.path === '/info' ? 'text-primary-clamped' : ''}>Info</a
+						class={$page.url.pathname === '/info' ? 'text-primary-clamped' : ''}>Info</a
 					>
 					<a
 						href={'/blend' + generalQueryString}
-						class={$page.path === '/blend' ? 'text-primary-clamped' : ''}>Blend</a
+						class={$page.url.pathname === '/blend' ? 'text-primary-clamped' : ''}>Blend</a
 					>
 					<a
 						href={'/modify' + generalQueryString}
-						class={$page.path === '/modify' ? 'text-primary-clamped' : ''}>Modify</a
+						class={$page.url.pathname === '/modify' ? 'text-primary-clamped' : ''}>Modify</a
 					>
 				</div>
 			</div>
