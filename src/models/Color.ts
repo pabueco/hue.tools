@@ -16,15 +16,21 @@ export class Color {
     }
   }
 
-  public toString(format?: ColorFormats | string, ): string {
-     if (format === 'hsi') {
-      return this.chroma.hsi().toString()
-    } else if (format === 'lab') {
-      return this.chroma.lab().map(n => n.toFixed(3)).toString()
-    }
+	public toString(format?: ColorFormats | string): string {
+		if (format === 'hsi') {
+			return this.chroma
+				.hsi()
+				.map((n) => n.toFixed(3))
+				.toString();
+		} else if (format === 'lab') {
+			return this.chroma
+				.lab()
+				.map((n) => n.toFixed(3))
+				.toString();
+		}
 
-    return this.tinycolor.toString((format as ColorFormats) || this.tinycolor.format)
-  }
+		return this.tinycolor.toString((format as ColorFormats) || this.tinycolor.format);
+	}
 
   static fromChroma(color: chroma.Color): Color {
     const c = new Color()
