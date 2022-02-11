@@ -13,7 +13,7 @@
 		outputFormat,
 		primaryColor,
 		primaryColorClamped,
-    primaryColorText
+		primaryColorText
 	} from '../store';
 	import { onMount } from 'svelte';
 	import { copyToClipboard } from '$src/utils/clipboard';
@@ -36,6 +36,10 @@
 
 		generalQueryString = `?${query.toString()}`;
 	}
+
+	const randomize = () => {
+		location.search = '';
+	};
 </script>
 
 <svelte:head>
@@ -71,8 +75,9 @@
 					<div class="flex items-center">
 						<a href="/" class="text-2xl md:text-3xl font-medium text-primary-clamped">hue.tools</a>
 						<button
-							on:click={() => ($page.url.search = '')}
+							on:click={() => randomize()}
 							class="ml-5 hover:text-primary-clamped transition hover:animate-spin-reverse"
+							title="Randomize colors"
 						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -92,6 +97,7 @@
 						<button
 							on:click={(e) => copyToClipboard(e, window.location.href)}
 							class="ml-5 hover:text-primary-clamped transition"
+							title="Copy current link to clipboard"
 						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
