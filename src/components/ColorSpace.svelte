@@ -1,15 +1,16 @@
 <script lang="ts">
-  import { copyToClipboard } from "../utils/clipboard";
-  import Field from "./Field.svelte";
+  import { copyToClipboard } from '../utils/clipboard'
+  import Field from './Field.svelte'
 
-  export let label: string;
-  export let value: string | number | Number[] = undefined;
+  export let label: string
+  export let value: string | number | Number[] = undefined
 
-  $: formattedValue = Array.isArray(value) ? value.map(v => isNaN(Number(v)) ? 0.00 : v.toFixed(2)).join(', ') : value
-
+  $: formattedValue = Array.isArray(value)
+    ? value.map((v) => (isNaN(Number(v)) ? 0.0 : v.toFixed(2))).join(', ')
+    : value
 </script>
 
-<Field label={label}>
+<Field {label}>
   <span on:click={(e) => copyToClipboard(e, formattedValue)}>
     {formattedValue}
   </span>

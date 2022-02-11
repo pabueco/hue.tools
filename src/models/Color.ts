@@ -1,13 +1,12 @@
-import { mostReadable, TinyColor } from "@ctrl/tinycolor";
-import type { ColorFormats } from "@ctrl/tinycolor";
-import chroma from "chroma-js";
+import { mostReadable, TinyColor } from '@ctrl/tinycolor'
+import type { ColorFormats } from '@ctrl/tinycolor'
+import chroma from 'chroma-js'
 
 export class Color {
+  public chroma: chroma.Color
+  public tinycolor: TinyColor
 
-  public chroma: chroma.Color;
-  public tinycolor: TinyColor;
-
-  public computedTextColor: string;
+  public computedTextColor: string
 
   constructor(color?: string) {
     if (color) {
@@ -16,21 +15,23 @@ export class Color {
     }
   }
 
-	public toString(format?: ColorFormats | string): string {
-		if (format === 'hsi') {
-			return this.chroma
-				.hsi()
-				.map((n) => n.toFixed(3))
-				.toString();
-		} else if (format === 'lab') {
-			return this.chroma
-				.lab()
-				.map((n) => n.toFixed(3))
-				.toString();
-		}
+  public toString(format?: ColorFormats | string): string {
+    if (format === 'hsi') {
+      return this.chroma
+        .hsi()
+        .map((n) => n.toFixed(3))
+        .toString()
+    } else if (format === 'lab') {
+      return this.chroma
+        .lab()
+        .map((n) => n.toFixed(3))
+        .toString()
+    }
 
-		return this.tinycolor.toString((format as ColorFormats) || this.tinycolor.format);
-	}
+    return this.tinycolor.toString(
+      (format as ColorFormats) || this.tinycolor.format
+    )
+  }
 
   static fromChroma(color: chroma.Color): Color {
     const c = new Color()
@@ -48,7 +49,10 @@ export class Color {
 
   public textColor(): string {
     if (!this.computedTextColor) {
-      this.computedTextColor = mostReadable(this.toString('hex'), ['#fff', '#000']).toHexString()
+      this.computedTextColor = mostReadable(this.toString('hex'), [
+        '#fff',
+        '#000',
+      ]).toHexString()
     }
 
     return this.computedTextColor

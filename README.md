@@ -14,7 +14,7 @@ Try it out: [hue.tools](https://hue.tools)
   - Change the alpha channel to make tiny adjustments
 - Info
   - Convert a color to many different color spaces and formats
-  - Links to resources/stock images using the same color on platforms like Dribble, Behance and Pexels 
+  - Links to resources/stock images using the same color on platforms like Dribble, Behance and Pexels
   - Color combinations/harmonies like Triad, Analogous, Polyad
   - Complementary color
   - Name of the color using a [curated list of color names](https://www.npmjs.com/package/color-name-list)

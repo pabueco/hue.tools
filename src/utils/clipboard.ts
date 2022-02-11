@@ -1,24 +1,27 @@
 // import { toast } from '@zerodevx/svelte-toast'
-import { sample } from 'lodash';
+import { sample } from 'lodash'
 
 /**
  * Copy a piece of text to the clipboard.
- * 
+ *
  * @param event The native MouseEvent
  * @param text The text to copy to the clipboard
  * @param message The success message to display afterwards
  */
-export const copyToClipboard = (event: MouseEvent, text: string | number, message?: string): void => {
+export const copyToClipboard = (
+  event: MouseEvent,
+  text: string | number,
+  message?: string
+): void => {
   navigator.clipboard.writeText(String(text)).then(() => {
-      // toast.push(message || `Copied: ${text}`);
-      showFloatingTooltip(event, message);
-    }
-  )
-};
+    // toast.push(message || `Copied: ${text}`);
+    showFloatingTooltip(event, message)
+  })
+}
 
 /**
  * Shows a little floating tooltip thing that disappears after a few seconds.
- * 
+ *
  * @param event The native MouseEvent
  * @param message The text to show
  */
@@ -28,7 +31,12 @@ const showFloatingTooltip = (event: MouseEvent, message = 'Copied!') => {
   el.style.position = 'fixed'
   el.style.zIndex = '10000'
   el.style.transition = 'all 250ms cubic-bezier(0.34, 1.56, 0.64, 1)'
-  el.style.transform = `translateX(-50%) scale(0) rotate(${sample([-25, -12.5, 12.5, 25])}deg)`
+  el.style.transform = `translateX(-50%) scale(0) rotate(${sample([
+    -25,
+    -12.5,
+    12.5,
+    25,
+  ])}deg)`
   el.style.pointerEvents = 'none'
 
   el.style.backgroundColor = '#fff'

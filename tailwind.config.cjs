@@ -2,11 +2,9 @@ const colors = require('tailwindcss/colors')
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 const config = {
-	content: [
-		"./src/**/*.{html,js,svelte,ts}",
-	],
-	theme: {
-		extend: {
+  content: ['./src/**/*.{html,js,svelte,ts}'],
+  theme: {
+    extend: {
       colors: {
         gray: colors.zinc,
 
@@ -25,18 +23,18 @@ const config = {
 
       animation: {
         'spin-reverse': 'spin-reverse 1s linear infinite',
-       },
+      },
 
       keyframes: {
         'spin-reverse': {
           to: {
-            transform: 'rotate(-360deg)'
-          }
-        }
-      }
+            transform: 'rotate(-360deg)',
+          },
+        },
+      },
     },
-	},
-	plugins: [],
-};
+  },
+  plugins: [],
+}
 
-module.exports = config;
+module.exports = config
