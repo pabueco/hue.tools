@@ -184,6 +184,14 @@
     class="flex items-center justify-center space-x-4 pt-4 relative z-10"
     style="color: {$primaryColorText}"
   >
+    <div>
+      <a
+        href="https://vercel.com/?utm_source=pabueco&utm_campaign=oss"
+        target="_blank"
+      >
+        <img src="/static/powered-by-vercel.svg" alt="Powered by Vercel" class="h-9" />
+      </a>
+    </div>
     <a href="https://github.com/pabueco/hue.tools" target="_blank">
       <svg
         height="24"

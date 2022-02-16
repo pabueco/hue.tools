@@ -33,6 +33,8 @@ Tip: Change to output format on the top right to get exactly the color format/sp
 
 Most of the color realted features in hue.tools are powered by [chroma.js](https://gka.github.io/chroma.js/) and [tinycolor](https://www.npmjs.com/package/@ctrl/tinycolor).
 
+[![Powered by Vercel](static/powered-by-vercel.svg)](https://vercel.com/?utm_source=pabueco&utm_campaign=oss)
+
 ## Contributing
 
 Contributions are always welcome!
