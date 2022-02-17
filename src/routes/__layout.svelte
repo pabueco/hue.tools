@@ -68,7 +68,7 @@
 	/> -->
 
   <div
-    class="fixed inset-0"
+    class="fixed inset-0 {$page.url.pathname === '/' ? 'transition' : ''}"
     style="background: {$primaryColor?.hex()};"
   />
 
