@@ -69,7 +69,7 @@
   style="color: {textColor}; background-color: {color.hex?.()}; box-shadow: 0 10px 30px -10px {color.chroma
     .alpha(color.chroma.alpha() - color.chroma.alpha() / 4)
     .css()}"
-  class="relative transition rounded-2xl p-4 flex-1 flex flex-col justify-end cursor-pointer group min-h-[175px]"
+  class="relative rounded-2xl p-4 flex-1 flex flex-col justify-end cursor-pointer group min-h-[175px]"
 >
   {#if deletable}
     <button
@@ -92,7 +92,7 @@
   {/if}
 
   <div
-    class="absolute top-4 text-lg font-medium opacity-80 transition hover:opacity-100 left-1/2 transform -translate-x-1/2 text-center"
+    class="absolute top-4 text-lg font-medium opacity-80 transition-opacity hover:opacity-100 left-1/2 transform -translate-x-1/2 text-center"
     style="color: {textColor};"
     on:click={(e) => copyToClipboard(e, colorName, 'Name copied!')}
   >
