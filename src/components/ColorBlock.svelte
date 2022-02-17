@@ -35,7 +35,7 @@
 
 <div
   style="background: {color.hex()}; color: {textColor}"
-  class="group relative min-h-[2.5rem] cursor-pointer transition duration-200 flex items-center justify-center select-none whitespace-nowrap 
+  class="group relative min-h-[2.5rem] cursor-pointer flex items-center justify-center select-none whitespace-nowrap 
     {expands ? 'w-full flex-1' : 'w-10'} 
     {animatesOnHover ? 'transform hover:scale-110' : ''} 
     {animatesOnClick ? 'active:scale-90' : ''} 
@@ -50,7 +50,7 @@
 >
   {#if showName && colorName}
     <div
-      class="text-lg font-medium opacity-80 transition hover:opacity-100 transform text-center
+      class="text-lg font-medium opacity-80 transition-opacity hover:opacity-100 transform text-center
       {compact ? 'mb-1' : 'absolute top-4 left-1/2 -translate-x-1/2'}
       "
       style="color: {textColor};"
