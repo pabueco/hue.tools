@@ -9,7 +9,7 @@
   import { clickOutside } from '$src/directives/clickoutside'
   import { Color } from '$src/models/Color'
   import { copyToClipboard } from '$src/utils/clipboard'
-  import throttle from 'lodash/throttle'
+  import { throttle } from 'lodash-es'
 
   export let color: Color
   export let deletable: boolean = false

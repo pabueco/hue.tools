@@ -1,5 +1,5 @@
 // import { toast } from '@zerodevx/svelte-toast'
-import { sample } from 'lodash'
+import { sample } from 'lodash-es'
 
 /**
  * Copy a piece of text to the clipboard.

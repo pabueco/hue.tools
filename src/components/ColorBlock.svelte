@@ -2,7 +2,7 @@
   import type { Color } from '$src/models/Color'
   import { outputFormat } from '$src/store'
   import { nearest } from '$src/utils/colors'
-  import throttle from 'lodash/throttle'
+  import { throttle } from 'lodash-es'
 
   import { copyToClipboard } from '../utils/clipboard'
 
