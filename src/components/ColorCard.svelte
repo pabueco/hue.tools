@@ -1,4 +1,6 @@
 <script lang="ts">
+  import chroma from 'chroma-js'
+  
   import { mostReadable, TinyColor } from '@ctrl/tinycolor'
   import type { ColorFormats } from '@ctrl/tinycolor'
 
@@ -18,8 +20,11 @@
 
   let isColorPickerVisible = false
 
-  let colorInput: string
+  const defaultColor = '#000'
+  let colorInput: HTMLInputElement
   let colorName: string
+
+  let isValidColor = true
 
   let inputFormat: ColorFormats = (initialFormat as ColorFormats) || 'hex'
 
@@ -33,10 +38,20 @@
     colorName = nearest(color.toString('hex')).name
   }
 
-  const onColorInput = async (event) => {
-    colorInput = event.target.value
-    color = new Color(colorInput)
-    inputFormat = new TinyColor(colorInput).format
+  /*
+    Check if passed argument is a valid color and update `isValidColor` accordingly
+  */
+  const validateColor = (value: string) => isValidColor = chroma.valid(value)
+
+  /*
+    Set passed color as active if it's a valid color
+  */
+  const setNewColor = async (newColor: string) => {
+    validateColor(newColor)
+    if (!isValidColor) return
+
+    color = new Color(newColor)
+    inputFormat = new TinyColor(newColor).format
     findColorName()
 
     dispatch('change', {
@@ -44,11 +59,17 @@
     })
   }
 
+  /*
+    Proceed with color change if the user's input isn't empty, otherwise - set default color as active
+  */
+  const onColorInputChange = () => colorInput.value ? setNewColor(colorInput.value) : setNewColor(defaultColor)
+  
   const findColorNameThrottled = throttle(() => {
     colorName = nearest(color.toString('hex')).name
   }, 400)
 
   const onColorPickerUpdate = () => {
+    validateColor(colorInput.value) // Udpate `isValidColor`
     findColorNameThrottled()
   }
 
@@ -120,7 +141,7 @@
   </button>
 
   <div
-    class="bg-black bg-opacity-25 text-white hover:bg-opacity-50 focus:bg-opacity-50 rounded-3xl transition mt-12 relative {isColorPickerVisible
+    class="bg-black {isValidColor ? 'bg-opacity-25' : 'bg-opacity-50'} text-white hover:bg-opacity-50 focus:bg-opacity-50 rounded-3xl transition mt-12 relative {isColorPickerVisible
       ? 'bg-opacity-50'
       : ''}"
   >
@@ -136,32 +157,50 @@
     {/if}
 
     <input
+      bind:this={colorInput}
       type="text"
       value={formattedColorValue}
       class="transition text-center font-semibold text-lg tracking-wider bg-transparent focus:outline-none w-full min-w-0 h-12 rounded-full"
-      on:blur={(e) => onColorInput(e)}
-      on:keyup={(e) => e.key === 'Enter' && onColorInput(e)}
+      on:blur={() => onColorInputChange()}
+      on:keyup={(e) => e.key === 'Enter' && onColorInputChange()}
     />
 
-    <button
-      on:click={(e) => copyToClipboard(e, formattedColorValue, 'Copied!')}
-      class="transition text-white opacity-60 hover:opacity-100 absolute left-[18px] bottom-[11px]"
-      title="Copy"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-6 w-6"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
+    <!-- 
+      Show icon to copy to clipboard the color value
+      If the input value isn't a valid color - show the warning icon instead
+    -->
+    {#if isValidColor}
+      <button
+        on:click={(e) => copyToClipboard(e, formattedColorValue, 'Copied!')}
+        class="transition text-white opacity-60 hover:opacity-100 absolute left-[18px] bottom-[11px]"
+        title="Copy"
       >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
-        />
-      </svg>
-    </button>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+          />
+        </svg>
+      </button>
+      
+      {:else}
+      <button
+          class="absolute left-[20px] bottom-[2px]"
+          title="Invalid color"
+        >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="red" class="h-8 w-8" viewBox="0 0 24 24" stroke="red">
+          <path stroke-width="0.7" d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+          <path stroke-width="0.7" d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+        </svg>
+      </button>
+    {/if}
   </div>
 </div>
