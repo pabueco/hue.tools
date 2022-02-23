@@ -34,6 +34,8 @@
 
   $: formattedColorValue = new TinyColor(color.hex()).toString(inputFormat)
 
+  $: validateColor(formattedColorValue) // run color validation on `color` prop change
+
   const findColorName = () => {
     colorName = nearest(color.toString('hex')).name
   }
@@ -46,7 +48,7 @@
   /*
     Set passed color as active if it's a valid color
   */
-  const setNewColor = async (newColor: string) => {
+  const updateColor = async (newColor: string) => {
     validateColor(newColor)
     if (!isValidColor) return
 
@@ -62,14 +64,13 @@
   /*
     Proceed with color change if the user's input isn't empty, otherwise - set default color as active
   */
-  const onColorInputChange = () => colorInput.value ? setNewColor(colorInput.value) : setNewColor(defaultColor)
+  const onColorInputChange = () => colorInput.value ? updateColor(colorInput.value) : updateColor(defaultColor)
   
   const findColorNameThrottled = throttle(() => {
     colorName = nearest(color.toString('hex')).name
   }, 400)
 
   const onColorPickerUpdate = () => {
-    validateColor(colorInput.value) // Udpate `isValidColor`
     findColorNameThrottled()
   }
 
