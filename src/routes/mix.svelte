@@ -347,7 +347,7 @@
             {#if gamma !== gammaDefault}
               <button
                 on:click={resetGamma}
-                class="transition text-gray-500 hover:text-primary-clamped"
+                class="transition dark:text-gray-500 text-gray-400 hover:text-primary-clamped"
                 title="Reset gamma"
               >
                 <svg

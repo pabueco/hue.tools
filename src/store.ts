@@ -6,6 +6,12 @@ import { Color } from './models/Color'
  * The current primary color.
  * This is mainly used for the site background.
  */
+export const isDarkMode: Writable<boolean> = writable()
+
+/**
+ * The current primary color.
+ * This is mainly used for the site background.
+ */
 export const primaryColor: Writable<Color> = writable()
 
 /**
@@ -34,8 +40,14 @@ export const primaryColorText: Readable<string> = derived(
  * This is used for elements like the logo, buttons and links.
  */
 export const primaryColorClamped: Readable<string> = derived(
-  primaryColor,
-  ($primaryColor) => $primaryColor?.chroma.luminance(0.5).saturate(1).hex()
+  [primaryColor, isDarkMode],
+  ([$primaryColor, $isDarkMode]) => {
+    if ($isDarkMode) {
+      return $primaryColor?.chroma.luminance(0.5).saturate(1).hex()
+    } else {
+      return $primaryColor?.chroma.luminance(0.3).saturate(0).hex()
+    }
+  }
 )
 export const complementColorClamped: Readable<string> = derived(
   complementColor,

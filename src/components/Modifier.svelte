@@ -24,7 +24,7 @@
 <Fieldset label={name}>
   <div class="flex justify-between">
     <div>
-      <div class="text-gray-400">
+      <div class="dark:text-gray-400 text-gray-500">
         <slot name="description" />
       </div>
     </div>

@@ -1,4 +1,6 @@
 // import { toast } from '@zerodevx/svelte-toast'
+import { isDarkMode } from '$src/store'
+import { get } from 'svelte/store'
 import { sample } from 'lodash-es'
 
 /**
@@ -39,8 +41,13 @@ const showFloatingTooltip = (event: MouseEvent, message = 'Copied!') => {
   ])}deg)`
   el.style.pointerEvents = 'none'
 
-  el.style.backgroundColor = '#fff'
-  el.style.color = '#000'
+  if (get(isDarkMode)) {
+    el.style.backgroundColor = '#fff'
+    el.style.color = '#000'
+  } else {
+    el.style.backgroundColor = '#000'
+    el.style.color = '#fff'
+  }
 
   // el.style.boxShadow = 'rgb(0 0 0 / 50%) 0px 3px 2px'
   el.className =
