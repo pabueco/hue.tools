@@ -9,11 +9,17 @@
 </script>
 
 <div class="flex flex-col mb-3 last:mb-0">
-  {#if label}
-    <div
-      class="mr-2 font-medium text-gray-400 w-16 text-base tracking-wider whitespace-nowrap"
-    >
-      {label}
+  {#if label || $$slots.actions}
+    <div class="flex items-center justify-between">
+      {#if label}
+        <div
+          class="mr-2 font-medium text-gray-400 w-16 text-base tracking-wider whitespace-nowrap"
+        >
+          {label}
+        </div>
+      {/if}
+
+      <slot name="actions" />
     </div>
   {/if}
   <div

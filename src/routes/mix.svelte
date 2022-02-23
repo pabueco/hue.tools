@@ -12,10 +12,15 @@
   import { Color } from '$src/models/Color'
   import ColorBlock from '$src/components/ColorBlock.svelte'
   import { copyToClipboard } from '$src/utils/clipboard'
+  import Slider from '$src/components/Slider.svelte'
+  import { clamp } from 'lodash-es'
 
   let queryColors = getColorsFromUrl()
 
   let colorInstances: Color[] = queryColors || [Color.random(), Color.random()]
+
+  const gammaDefault = 1
+  let gamma = Number(getQueryParam('gamma')) || gammaDefault
 
   let stepsCount =
     Number(getQueryParam('steps', localStorage.getItem('steps'))) || 10
@@ -43,6 +48,7 @@
 
   $: colorSteps = chroma
     .scale(colorInstances.map((c) => c.hex()))
+    .gamma(gamma)
     .mode(mode)
     .colors(stepsCount)
     .map((c) => new Color(c))
@@ -90,6 +96,23 @@
       'colors',
       colorInstances.map((c) => c.toString('hex8')).filter((v) => !!v)
     )
+  }
+
+  const gammaRange = {
+    min: 0.3,
+    max: 3,
+  }
+
+  let gammaSlider: Slider
+  const updateGamma = (value: string | number) => {
+    gamma = clamp(Number(value) || 1, gammaRange.min, gammaRange.max)
+    gammaSlider.set(gamma)
+  }
+  const onGammaInput = (event) => {
+    updateGamma((event.target as HTMLInputElement).value)
+  }
+  const resetGamma = () => {
+    updateGamma(gammaDefault)
   }
 
   onColorChange()
@@ -292,21 +315,64 @@
 
   <div class="mt-16">
     <Fieldset label="Settings">
-      <Field label="Interpolation Mode" hoverable={false}>
-        <div class="flex flex-wrap gap-x-3.5 md:gap-x-5 mt-2">
-          {#each modes as type}
-            <button
-              class="uppercase font-medium tracking-wider transition text-xl {mode ===
-              type
-                ? 'text-primary-clamped'
-                : ''}"
-              on:click={() => (mode = type)}
-            >
-              {type}
-            </button>
-          {/each}
-        </div>
-      </Field>
+      <div class="grid lg:grid-cols-2 gap-8">
+        <Field label="Interpolation Mode" hoverable={false}>
+          <div class="flex flex-wrap gap-x-3.5 md:gap-x-5 mt-2">
+            {#each modes as type}
+              <button
+                class="uppercase font-medium tracking-wider transition text-xl {mode ===
+                type
+                  ? 'text-primary-clamped'
+                  : ''}"
+                on:click={() => (mode = type)}
+              >
+                {type}
+              </button>
+            {/each}
+          </div>
+        </Field>
+        <Field label="Gamma Correction" hoverable={false}>
+          <div class="mt-4">
+            <Slider
+              bind:this={gammaSlider}
+              start={gamma}
+              on:slide={(e) => (gamma = parseFloat(e.detail.values))}
+              on:change={() => updateQuery('gamma', gamma.toString())}
+              range={gammaRange}
+              step={0.01}
+            />
+          </div>
+
+          <div slot="actions" class="flex items-center space-x-2">
+            {#if gamma !== gammaDefault}
+              <button
+                on:click={resetGamma}
+                class="transition text-gray-500 hover:text-primary-clamped"
+                title="Reset gamma"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+            {/if}
+
+            <input
+              class="font-mono text-right bg-transparent w-[4ch] focus:outline-none"
+              value={gamma.toFixed(2)}
+              on:input={onGammaInput}
+            />
+          </div>
+        </Field>
+      </div>
     </Fieldset>
   </div>
 
