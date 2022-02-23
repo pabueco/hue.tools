@@ -34,7 +34,7 @@
 
   $: formattedColorValue = new TinyColor(color.hex()).toString(inputFormat)
 
-  $: validateColor(formattedColorValue) // run color validation on `color` prop change
+  $: validateColor(formattedColorValue) // Run color validation on `color` prop change
 
   const findColorName = () => {
     colorName = nearest(color.toString('hex')).name
