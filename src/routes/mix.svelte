@@ -17,6 +17,9 @@
 
   let colorInstances: Color[] = queryColors || [Color.random(), Color.random()]
 
+  let dragColorIndex = -1
+  let lastDragUpdate = Date.now()
+
   let stepsCount =
     Number(getQueryParam('steps', localStorage.getItem('steps'))) || 10
 
@@ -92,6 +95,28 @@
     )
   }
 
+  const onDrop = (index) => {
+    if (dragColorIndex === -1 || dragColorIndex === index) {
+      return;
+    }
+    const instancesWithoutDragColor = colorInstances.filter((_, i) => i !== dragColorIndex)
+    colorInstances = [
+      ...instancesWithoutDragColor.slice(0, index),
+      colorInstances[dragColorIndex],
+      ...instancesWithoutDragColor.slice(index)
+    ]
+    onColorChange()
+    lastDragUpdate = Date.now()
+  }
+
+  const onDrag = (index) => {
+    dragColorIndex = index
+  }
+
+  const onDragEnd = () => {
+    dragColorIndex = -1
+  }
+
   onColorChange()
 </script>
 
@@ -126,18 +151,27 @@
         </button>
       </div>
 
-      <div class="flex-1 flex flex-col space-y-4">
-        {#each colorInstances as colorInstance, index (index)}
-          <div class="flex-1 flex flex-col">
-            <ColorCard
-              deletable={colorInstances.length > 2}
-              bind:color={colorInstance}
-              on:delete={() => removeColor(index)}
-              on:change={onColorChange}
-            />
-          </div>
-        {/each}
-      </div>
+      {#key lastDragUpdate}
+        <div class="flex-1 flex flex-col space-y-4">
+          {#each colorInstances as colorInstance, index (index)}
+            <div
+              class="flex-1 flex flex-col"
+              draggable="true"
+              on:dragstart={() => onDrag(index)}
+              on:drop|preventDefault={() => onDrop(index)}
+              on:dragover|preventDefault
+              on:dragend={onDragEnd}
+            >
+              <ColorCard
+                deletable={colorInstances.length > 2}
+                bind:color={colorInstance}
+                on:delete={() => removeColor(index)}
+                on:change={onColorChange}
+              />
+            </div>
+          {/each}
+        </div>
+      {/key}
     </div>
 
     <div class="flex flex-col flex-1 order-3 lg:order-2">
