@@ -10,12 +10,12 @@
 
   $: if (color && colorPicker) {
     colorPicker.color.hexString = color.hex()
-    // colorPicker.color.hexString = chroma(color).hex()
   }
 
   const dispatch = createEventDispatcher<{
     change: { color: Color }
     update: { color: Color }
+    inputstart: undefined
   }>()
 
   onMount(() => {
@@ -53,7 +53,7 @@
     })
 
     colorPicker.on('color:change', function (newColor: iro.Color) {
-      color = new Color(newColor.rgbaString)
+      color = color.update(newColor.rgbaString)
 
       dispatch('update', {
         color,
@@ -61,9 +61,15 @@
     })
 
     colorPicker.on('input:end', function (newColor: iro.Color) {
+      color = color.update(newColor.rgbaString)
+
       dispatch('change', {
-        color: new Color(newColor.rgbaString),
+        color,
       })
+    })
+
+    colorPicker.on('input:start', function () {
+      dispatch('inputstart')
     })
   })
 </script>

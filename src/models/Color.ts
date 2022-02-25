@@ -65,6 +65,13 @@ export class Color {
     return this.chroma.hex()
   }
 
+  public update(color: string): Color {
+    this.chroma = chroma(color)
+    this.tinycolor = new TinyColor(color)
+
+    return this
+  }
+
   static random(alpha = 1): Color {
     const c = chroma.random().alpha(alpha)
     return Color.fromChroma(c)

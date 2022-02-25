@@ -1,6 +1,6 @@
 <script lang="ts">
   import chroma from 'chroma-js'
-  
+
   import { mostReadable, TinyColor } from '@ctrl/tinycolor'
   import type { ColorFormats } from '@ctrl/tinycolor'
 
@@ -9,7 +9,7 @@
 
   import ColorPicker from './ColorPicker.svelte'
   import { clickOutside } from '$src/directives/clickoutside'
-  import { Color } from '$src/models/Color'
+  import type { Color } from '$src/models/Color'
   import { copyToClipboard } from '$src/utils/clipboard'
   import { throttle } from 'lodash-es'
 
@@ -34,8 +34,6 @@
 
   $: formattedColorValue = new TinyColor(color.hex()).toString(inputFormat)
 
-  $: validateColor(formattedColorValue) // Run color validation on `color` prop change
-
   const findColorName = () => {
     colorName = nearest(color.toString('hex')).name
   }
@@ -43,7 +41,7 @@
   /*
     Check if passed argument is a valid color and update `isValidColor` accordingly
   */
-  const validateColor = (value: string) => isValidColor = chroma.valid(value)
+  const validateColor = (value: string) => (isValidColor = chroma.valid(value))
 
   /*
     Set passed color as active if it's a valid color
@@ -52,8 +50,7 @@
     validateColor(newColor)
     if (!isValidColor) return
 
-    color = new Color(newColor)
-    inputFormat = new TinyColor(newColor).format
+    color = color.update(newColor)
     findColorName()
 
     dispatch('change', {
@@ -64,8 +61,9 @@
   /*
     Proceed with color change if the user's input isn't empty, otherwise - set default color as active
   */
-  const onColorInputChange = () => colorInput.value ? updateColor(colorInput.value) : updateColor(defaultColor)
-  
+  const onColorInputChange = () =>
+    colorInput.value ? updateColor(colorInput.value) : updateColor(defaultColor)
+
   const findColorNameThrottled = throttle(() => {
     colorName = nearest(color.toString('hex')).name
   }, 400)
@@ -75,10 +73,16 @@
   }
 
   const onColorPickerChange = () => {
-    // findColorName();
     dispatch('change', {
       color,
     })
+  }
+
+  const onColorPickerInputStart = () => {
+    // The color produced by the color picker will always be valid, so we can safely reset it here.
+    if (!isValidColor) {
+      isValidColor = true
+    }
   }
 
   findColorName()
@@ -142,7 +146,9 @@
   </button>
 
   <div
-    class="bg-black {isValidColor ? 'bg-opacity-25' : 'bg-opacity-50'} text-white hover:bg-opacity-50 focus:bg-opacity-50 rounded-3xl transition mt-12 relative {isColorPickerVisible
+    class="bg-black {isValidColor
+      ? 'bg-opacity-25'
+      : 'bg-opacity-50'} text-white hover:bg-opacity-50 focus:bg-opacity-50 rounded-3xl transition mt-12 relative {isColorPickerVisible
       ? 'bg-opacity-50'
       : ''}"
   >
@@ -152,6 +158,7 @@
           bind:color
           on:change={onColorPickerChange}
           on:update={onColorPickerUpdate}
+          on:inputstart={onColorPickerInputStart}
           showAlphaSlider={hasTransparency}
         />
       </div>
@@ -191,14 +198,21 @@
           />
         </svg>
       </button>
-      
-      {:else}
-      <button
-          class="absolute left-[18px] bottom-[11px]"
-          title="Invalid color"
+    {:else}
+      <button class="absolute left-[18px] bottom-[11px]" title="Invalid color">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="red"
         >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="red">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+          />
         </svg>
       </button>
     {/if}
