@@ -1,6 +1,7 @@
 import { derived, writable } from 'svelte/store'
 import type { Readable, Writable } from 'svelte/store'
 import { Color } from './models/Color'
+import type { ColorFormats } from '@ctrl/tinycolor'
 
 /**
  * The current primary color.
@@ -46,4 +47,4 @@ export const complementColorClamped: Readable<string> = derived(
 /**
  * The selected color format used to display generated colors and when copying a color to the clipboard.
  */
-export const outputFormat: Writable<string> = writable()
+export const outputFormat: Writable<ColorFormats> = writable()

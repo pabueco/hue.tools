@@ -150,7 +150,7 @@
       </div>
 
       <div class="flex-1 flex flex-col space-y-4">
-        {#each colorInstances as colorInstance, index (index)}
+        {#each colorInstances as colorInstance, index (colorInstance.id)}
           <div class="flex-1 flex flex-col">
             <ColorCard
               deletable={colorInstances.length > 2}

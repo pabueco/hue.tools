@@ -1,6 +1,7 @@
 import { mostReadable, TinyColor } from '@ctrl/tinycolor'
 import type { ColorFormats } from '@ctrl/tinycolor'
 import chroma from 'chroma-js'
+import { uniqueId } from 'lodash-es'
 
 export class Color {
   public chroma: chroma.Color
@@ -8,10 +9,12 @@ export class Color {
 
   public computedTextColor: string
 
+  public id: string
+
   constructor(color?: string) {
+    this.id = uniqueId('color_')
     if (color) {
-      this.chroma = chroma(color)
-      this.tinycolor = new TinyColor(color)
+      this.update(color)
     }
   }
 
@@ -60,6 +63,13 @@ export class Color {
 
   public hex(): string {
     return this.chroma.hex()
+  }
+
+  public update(color: string): Color {
+    this.chroma = chroma(color)
+    this.tinycolor = new TinyColor(color)
+
+    return this
   }
 
   static random(alpha = 1): Color {
