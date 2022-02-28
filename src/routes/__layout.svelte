@@ -19,9 +19,10 @@
   import { onMount } from 'svelte'
   import { copyToClipboard } from '$src/utils/clipboard'
   import { updateQuery } from '$src/utils/url'
+  import type { ColorFormats } from '@ctrl/tinycolor';
 
   onMount(() => {
-    $outputFormat = localStorage.getItem('format') || 'hex'
+    $outputFormat = (localStorage.getItem('format') || 'hex') as ColorFormats
   })
 
   $: if (browser && localStorage && $outputFormat) {
