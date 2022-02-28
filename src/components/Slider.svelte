@@ -67,10 +67,14 @@
     @apply bg-primary-clamped;
   }
   :global(.noUi-target) {
-    @apply bg-gray-700 border-none border-opacity-75 shadow-none bg-opacity-50 h-2.5 rounded-full;
+    @apply dark:bg-gray-700 bg-gray-300 border-none border-opacity-75 shadow-none bg-opacity-50 h-2.5 rounded-full;
   }
   :global(.noUi-handle) {
-    @apply h-6 w-6 rounded-full bg-primary-clamped shadow-none border-gray-900 border-4 top-[-8px] transition !important;
+    @apply h-6 w-6 rounded-full bg-primary-clamped shadow-none border-white border-4 top-[-8px] transition !important;
+  }
+
+  :global(.dark .noUi-handle) {
+    @apply border-gray-900 !important;
   }
   :global(.noUi-handle[aria-valuenow='0.0']) {
     @apply bg-gray-400 !important;
@@ -79,4 +83,6 @@
   :global(.noUi-handle::after) {
     @apply hidden;
   }
+
+  @dar;
 </style>

@@ -10,6 +10,7 @@
   import {
     complementColor,
     complementColorClamped,
+    isDarkMode,
     outputFormat,
     primaryColor,
     primaryColorClamped,
@@ -40,6 +41,25 @@
   const randomize = () => {
     location.search = ''
   }
+
+  const toggleColorMode = () => {
+    $isDarkMode = !$isDarkMode
+  }
+
+  $: if ($isDarkMode !== undefined) {
+    localStorage.setItem('theme', $isDarkMode ? 'dark' : 'light')
+
+    if ($isDarkMode) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  }
+
+  const storedTheme = localStorage.theme
+  $isDarkMode =
+    storedTheme === 'dark' ||
+    (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)
 </script>
 
 <svelte:head>
@@ -73,10 +93,12 @@
   />
 
   {#if $page.url.pathname !== '/'}
-    <div class="bg-gray-900 rounded-2xl mb-3 relative z-10 text-white">
-      <div class="px-6 md:px-10 py-6 flex flex-col justify-center relative">
+    <div
+      class="dark:bg-gray-900 dark:text-white bg-white rounded-2xl mb-3 relative z-10 text-gray-900 transition duration-300"
+    >
+      <div class="px-6 lg:px-10 py-6 flex flex-col justify-center relative">
         <div
-          class="relative md:absolute md:inset-x-10 w-full md:w-auto flex items-center justify-between"
+          class="relative lg:absolute lg:inset-x-10 w-full lg:w-auto flex items-center justify-between"
         >
           <div class="flex items-center">
             <a
@@ -124,13 +146,50 @@
                 />
               </svg>
             </button>
+            <button
+              on:click={toggleColorMode}
+              class="ml-5 hover:text-primary-clamped transition"
+              title="Copy current link to clipboard"
+            >
+              {#if $isDarkMode}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+                  />
+                </svg>
+              {:else}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+                  />
+                </svg>
+              {/if}
+            </button>
           </div>
 
           <div class="flex items-center">
             <label for="" class="mr-3 hidden md:block">Output format:</label>
             <select
               bind:value={$outputFormat}
-              class="bg-gray-700 transition hover:bg-gray-600 focus:outline-none px-2 py-1 rounded-md cursor-pointer"
+              class="dark:bg-gray-700 bg-gray-200 transition dark:hover:bg-gray-600 focus:outline-none px-2 py-1 rounded-md cursor-pointer"
             >
               <option value="hex" class="bg-transparent">HEX</option>
               <option value="rgb">RGB</option>
@@ -142,7 +201,9 @@
           </div>
         </div>
 
-        <div class="bg-gray-800 block md:hidden h-px my-5 -mx-6" />
+        <div
+          class="dark:bg-gray-800 bg-gray-300 block lg:hidden h-px my-5 -mx-6"
+        />
 
         <div
           class="self-center flex items-center justify-center space-x-4 text-xl font-medium order-last flex-basis-[100%] md:order-none relative z-10"
@@ -175,7 +236,7 @@
   {/if}
 
   <div
-    class="flex-1 flex flex-col relative z-10 bg-gray-900 text-white rounded-2xl shadow-lg p-6 md:p-10 pb-8 md:pb-12"
+    class="flex-1 flex flex-col relative z-10 dark:bg-gray-900 dark:text-white bg-white text-gray-900 rounded-2xl shadow-lg p-6 md:p-10 pb-8 md:pb-12 transition duration-300"
   >
     <slot />
   </div>

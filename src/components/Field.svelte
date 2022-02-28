@@ -13,7 +13,7 @@
     <div class="flex items-center justify-between">
       {#if label}
         <div
-          class="mr-2 font-medium text-gray-400 w-16 text-base tracking-wider whitespace-nowrap"
+          class="mr-2 font-medium dark:text-gray-400 text-gray-500 w-16 text-base tracking-wider whitespace-nowrap"
         >
           {label}
         </div>
@@ -23,7 +23,7 @@
     </div>
   {/if}
   <div
-    class="tabular-nums text-xl font-medium cursor-pointer text-gray-100 {hoverable
+    class="tabular-nums text-xl font-medium cursor-pointer dark:text-gray-100 text-gray-900 {hoverable
       ? 'hover:text-primary-clamped'
       : ''} transition"
   >

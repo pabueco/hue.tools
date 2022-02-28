@@ -40,10 +40,10 @@
     >
       hue.tools
     </h1>
-    <p class="text-base sm:text-xl text-gray-400">
+    <p class="text-base sm:text-xl dark:text-gray-400 text-gray-500">
       An <a
         href="https://github.com/pabueco/hue.tools"
-        class="text-gray-300 hover:text-primary-clamped transition"
+        class="dark:text-gray-300 text-gray-800 hover:text-primary-clamped transition"
         target="_blank">open source</a
       > toolbox for colors.
     </p>
@@ -55,7 +55,7 @@
     {#each tools as tool}
       <a
         href={'/' + tool}
-        class="transition transform hover:-translate-y-1 border border-gray-700/60 shadow shadow-black/50 rounded-lg hover:bg-primary hover:text-primary-text hover:border-primary hover:shadow-xl hover:shadow-black/30 uppercase px-8 py-4 text-center"
+        class="transition transform hover:-translate-y-1 bg-white dark:bg-transparent border dark:border-gray-700/60 border-gray-300 shadow dark:shadow-black/50 rounded-lg hover:!bg-primary hover:!text-primary-text hover:!border-primary hover:shadow-xl dark:hover:shadow-black/30 uppercase px-8 py-4 text-center"
         on:mouseenter={handleMouseEnter}
       >
         <span class="font-semibold text-base sm:text-lg tracking-widest"
