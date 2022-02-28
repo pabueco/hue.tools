@@ -130,7 +130,7 @@
 
         <button
           on:click={addColor}
-          class="h-8 w-8 border border-white hover:border-primary-clamped hover:text-primary-clamped rounded-full flex items-center justify-center"
+          class="h-8 w-8 border dark:border-white border-gray-900 hover:border-primary-clamped hover:text-primary-clamped rounded-full flex items-center justify-center transition"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
