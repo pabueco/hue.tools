@@ -23,7 +23,7 @@
     </div>
   {/if}
   <div
-    class="tabular-nums text-xl font-medium cursor-pointer dark:text-gray-100 text-gray-600 {hoverable
+    class="tabular-nums text-xl font-medium cursor-pointer dark:text-gray-100 text-gray-900 {hoverable
       ? 'hover:text-primary-clamped'
       : ''} transition"
   >
