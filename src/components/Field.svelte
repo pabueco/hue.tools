@@ -24,7 +24,7 @@
   {/if}
   <div
     class="tabular-nums text-xl font-medium cursor-pointer dark:text-gray-100 text-gray-900 {hoverable
-      ? 'hover:text-primary-clamped'
+      ? 'hover:!text-primary-clamped'
       : ''} transition"
   >
     <slot>{formattedValue}</slot>

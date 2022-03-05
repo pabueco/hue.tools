@@ -130,7 +130,7 @@
 
         <button
           on:click={addColor}
-          class="h-8 w-8 border dark:border-white border-gray-900 hover:border-primary-clamped hover:text-primary-clamped rounded-full flex items-center justify-center transition"
+          class="h-8 w-8 border dark:border-white border-gray-900 hover:!border-primary-clamped hover:!text-primary-clamped rounded-full flex items-center justify-center transition"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -320,7 +320,7 @@
           <div class="flex flex-wrap gap-x-3.5 md:gap-x-5 mt-2">
             {#each modes as type}
               <button
-                class="uppercase font-medium tracking-wider transition text-xl {mode ===
+                class="uppercase font-medium tracking-wider transition text-xl hover:!text-primary-clamped {mode ===
                 type
                   ? 'text-primary-clamped'
                   : ''}"

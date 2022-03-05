@@ -143,17 +143,17 @@
             <Fieldset label="Inspiration">
               <div class="flex flex-col space-y-3">
                 <a
-                  class="text-lg flex items-center"
+                  class="text-lg flex items-center transition hover:text-primary-clamped"
                   href="https://dribbble.com/shots/popular?color={colorInstance
                     .hex()
                     .replace('#', '')}&timeframe=ever"
                   target="_blank"
                 >
-                  <img src="/icons/dribbble.ico" class="h-5 mr-2.5" alt="" />
+                  <img src="/icons/dribbble.ico" class="w-5 mr-2.5" alt="" />
                   Dribble
                 </a>
                 <a
-                  class="text-lg flex items-center"
+                  class="text-lg flex items-center transition hover:text-primary-clamped"
                   href="https://www.behance.net/search/projects?color_hex={colorInstance
                     .hex()
                     .replace('#', '')}"
@@ -161,13 +161,13 @@
                 >
                   <img
                     src="/icons/behance.ico"
-                    class="h-5 mr-2.5 rounded"
+                    class="w-5 mr-2.5 rounded"
                     alt=""
                   />
                   Behance
                 </a>
                 <a
-                  class="text-lg flex items-center"
+                  class="text-lg flex items-center transition hover:text-primary-clamped"
                   href="https://www.designspiration.com/color/{colorInstance
                     .hex()
                     .replace('#', '')}"
@@ -175,7 +175,7 @@
                 >
                   <img
                     src="/icons/designspiration.png"
-                    class="h-5 mr-2.5 rounded"
+                    class="w-5 mr-2.5 rounded"
                     alt=""
                   />
                   Designspiration
@@ -188,7 +188,7 @@
             <Fieldset label="Images" className="h-full">
               <div class="flex flex-col space-y-3">
                 <a
-                  class="text-lg flex items-center"
+                  class="text-lg flex items-center transition hover:text-primary-clamped"
                   href="https://www.pexels.com/search/%20/?color={colorInstance
                     .hex()
                     .replace('#', '')}"
@@ -196,13 +196,13 @@
                 >
                   <img
                     src="/icons/pexels.ico"
-                    class="h-6 mr-2.5 rounded"
+                    class="w-5 mr-2.5 rounded"
                     alt=""
                   />
                   Pexels
                 </a>
                 <a
-                  class="text-lg flex items-center"
+                  class="text-lg flex items-center transition hover:text-primary-clamped"
                   href="http://labs.tineye.com/multicolr/#colors={colorInstance
                     .hex()
                     .replace('#', '')}"
@@ -210,7 +210,7 @@
                 >
                   <img
                     src="/icons/tineye.ico"
-                    class="h-5 mr-2.5 rounded"
+                    class="w-5 mr-2.5 rounded"
                     alt=""
                   />
                   TinEye Search Engine
