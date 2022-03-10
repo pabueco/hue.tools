@@ -14,11 +14,12 @@
   export let className: string = ''
   export let size: string = 'default'
   export let showName: boolean = false
+  export let showNameOnHover: boolean = false
   export let compact: boolean = false
 
   let textColor = undefined
 
-  $: if (alwaysShowColor) {
+  $: if (alwaysShowColor || showName) {
     textColor = color.textColor()
   }
 
@@ -30,6 +31,17 @@
 
   $: if (showName && color) {
     findColorNameThrottled()
+  }
+
+  const onMouseEnter = () => {
+    // Lazily compute text color on hover to prevent performance issues.
+    if (!alwaysShowColor) {
+      textColor = color.textColor()
+    }
+
+    if (!showName && showNameOnHover) {
+      findColorNameThrottled()
+    }
   }
 </script>
 
@@ -45,13 +57,16 @@
     {compact ? 'flex-col' : ''}
   "
   on:click|self={(e) => copyToClipboard(e, color.toString($outputFormat))}
-  on:mouseenter={() =>
-    !alwaysShowColor ? (textColor = color.textColor()) : null}
+  on:mouseenter={onMouseEnter}
 >
-  {#if showName && colorName}
+  {#if (showName && colorName) || showNameOnHover}
     <div
-      class="text-lg font-medium opacity-80 transition-opacity hover:opacity-100 transform text-center
-      {compact ? 'mb-1' : 'absolute top-4 left-1/2 -translate-x-1/2'}
+      class="
+        {size === 'sm' ? 'text-sm' : ''} 
+        {size === 'lg' ? 'text-lg' : ''}
+        font-medium opacity-80 transition-opacity hover:opacity-100 transform text-center
+        {compact ? 'mb-1' : 'absolute top-4 left-1/2 -translate-x-1/2'}
+        {showNameOnHover ? '!opacity-0 group-hover:!opacity-100' : ''}
       "
       style="color: {textColor};"
       on:click={(e) => copyToClipboard(e, colorName, 'Name copied!')}
