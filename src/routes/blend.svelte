@@ -89,10 +89,14 @@
     </Field>
   </Fieldset> -->
 
-  <div class="flex flex-row space-x-10">
+  <div
+    class="flex flex-col 2xl:flex-row space-y-10 2xl:space-y-0 2xl:space-x-10"
+  >
     <div class="flex flex-col">
       <h2 class="font-bold text-2xl mb-6">Your colors</h2>
-      <div class="flex flex-col space-y-5 flex-1">
+      <div
+        class="flex flex-col lg:flex-row space-y-5 lg:space-x-5 lg:space-y-0 flex-1 2xl:flex-col 2xl:space-x-0 2xl:space-y-5"
+      >
         {#each colorInstances as colorInstance, index (index)}
           <div class="flex-1 flex flex-col">
             <ColorCard
@@ -108,7 +112,9 @@
 
     <div class="flex-1">
       <h2 class="font-bold text-2xl mb-6">Blend modes</h2>
-      <div class="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div
+        class="grid gap-4 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4"
+      >
         {#each blendedColors as blendResult, index (index)}
           <div
             class="flex flex-col border dark:border-gray-700 border-gray-300 p-4 rounded-2xl"
