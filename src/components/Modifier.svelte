@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { clamp } from 'lodash-es'
+
   import { createEventDispatcher } from 'svelte'
 
   import Fieldset from './Fieldset.svelte'
@@ -13,8 +15,13 @@
   let slider
 
   const onInput = (event) => {
-    const newValue = parseInt(event.target.value)
+    let newValue = clamp(parseInt(event.target.value), 0, 100)
+    if (isNaN(newValue)) {
+      newValue = 0
+    }
     value = newValue
+    // Manually overwrite the input value to remove invalid inputs.
+    event.target.value = value
     slider.set(newValue)
   }
 
