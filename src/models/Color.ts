@@ -1,4 +1,4 @@
-import { mostReadable, TinyColor } from '@ctrl/tinycolor'
+import { ColorInput, mostReadable, RGBA, TinyColor } from '@ctrl/tinycolor'
 import type { ColorFormats } from '@ctrl/tinycolor'
 import chroma from 'chroma-js'
 import { uniqueId } from 'lodash-es'
@@ -11,7 +11,7 @@ export class Color {
 
   public id: string
 
-  constructor(color?: string) {
+  constructor(color?: ColorInput) {
     this.id = uniqueId('color_')
     if (color) {
       this.update(color)
@@ -65,9 +65,9 @@ export class Color {
     return this.chroma.hex()
   }
 
-  public update(color: string): Color {
-    this.chroma = chroma(color)
+  public update(color: ColorInput): Color {
     this.tinycolor = new TinyColor(color)
+    this.chroma = chroma(this.tinycolor.toRgbString())
 
     return this
   }
