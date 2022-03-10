@@ -1,15 +1,9 @@
 <script lang="ts">
   import ColorBlock from '$src/components/ColorBlock.svelte'
-
   import ColorCard from '$src/components/ColorCard.svelte'
-
-  import Field from '$src/components/Field.svelte'
-
-  import Fieldset from '$src/components/Fieldset.svelte'
   import { Color } from '$src/models/Color'
   import { primaryColor } from '$src/store'
   import { getColorsFromUrl, getQueryParam, updateQuery } from '$src/utils/url'
-  import chroma from 'chroma-js'
   import * as blend from 'color-blend'
 
   let modes = [
@@ -41,13 +35,12 @@
   ]
 
   // We only use the average color as the primary color for this tool.
-  $: averageColor = Color.fromChroma(
-    chroma.average(
-      colorInstances.map((c) => c.chroma),
-      'lch'
+  $: $primaryColor = new Color(
+    blend.overlay(
+      colorInstances[0].tinycolor.toRgb(),
+      colorInstances[1].tinycolor.toRgb()
     )
   )
-  $: $primaryColor = averageColor
 
   $: blendedColors = modes.map((m) => ({
     mode: m.name,
@@ -71,24 +64,6 @@
 </svelte:head>
 
 <div class="flex-1 container mx-auto flex flex-col">
-  <!-- <Fieldset label="Blend Mode">
-    <Field hoverable={false}>
-      <div class="flex flex-wrap gap-x-5 gap-y-2">
-        {#each modes as m}
-          <button
-            class="uppercase font-medium tracking-wider transition text-xl {mode ===
-            m.id
-              ? 'text-primary-clamped'
-              : ''}"
-            on:click={() => (mode = m.id)}
-          >
-            {m.name}
-          </button>
-        {/each}
-      </div>
-    </Field>
-  </Fieldset> -->
-
   <div
     class="flex flex-col 2xl:flex-row space-y-10 2xl:space-y-0 2xl:space-x-10"
   >
