@@ -19,7 +19,7 @@
   import { onMount } from 'svelte'
   import { copyToClipboard } from '$src/utils/clipboard'
   import { updateQuery } from '$src/utils/url'
-  import type { ColorFormats } from '@ctrl/tinycolor';
+  import type { ColorFormats } from '@ctrl/tinycolor'
 
   onMount(() => {
     $outputFormat = (localStorage.getItem('format') || 'hex') as ColorFormats
@@ -35,7 +35,6 @@
   $: if ($page.url.pathname) {
     const query = new URLSearchParams()
     query.set('format', $outputFormat)
-
     generalQueryString = `?${query.toString()}`
   }
 
@@ -61,6 +60,8 @@
   $isDarkMode =
     storedTheme === 'dark' ||
     (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)
+
+  updateQuery('format', $outputFormat)
 </script>
 
 <svelte:head>
