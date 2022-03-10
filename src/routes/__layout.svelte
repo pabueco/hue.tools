@@ -35,7 +35,6 @@
   $: if ($page.url.pathname) {
     const query = new URLSearchParams()
     query.set('format', $outputFormat)
-
     generalQueryString = `?${query.toString()}`
   }
 
@@ -61,6 +60,8 @@
   $isDarkMode =
     storedTheme === 'dark' ||
     (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)
+
+  updateQuery('format', $outputFormat)
 </script>
 
 <svelte:head>

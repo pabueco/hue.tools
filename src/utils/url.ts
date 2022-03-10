@@ -12,11 +12,8 @@ export const updateQuery = (key: string, value: string | string[]): void => {
   const searchParams = new URLSearchParams(location.search)
   searchParams.set(key, paramValue.replace(/#/g, ''))
 
-  goto('?' + searchParams.toString(), {
-    keepfocus: true,
-    replaceState: true,
-    noscroll: true,
-  })
+  // Silently update the current query string.
+  window?.history.pushState(null, '', '?' + searchParams.toString())
 }
 
 /**
