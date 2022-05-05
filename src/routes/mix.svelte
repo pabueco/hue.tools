@@ -13,7 +13,7 @@
   import ColorBlock from '$src/components/ColorBlock.svelte'
   import { copyToClipboard } from '$src/utils/clipboard'
   import Slider from '$src/components/Slider.svelte'
-  import { clamp } from 'lodash-es'
+  import { clamp, debounce } from 'lodash-es'
 
   let queryColors = getColorsFromUrl()
 
@@ -26,7 +26,8 @@
     Number(getQueryParam('steps', localStorage.getItem('steps'))) || 10
 
   $: if (stepsCount) {
-    checkStepCountRange()
+    updateQuery('steps', stepsCount.toString())
+    debouncedCheckStepsCountRange()
   }
 
   let showStepsAsGradient = getQueryParam('view') === 'gradient'
@@ -80,16 +81,25 @@
     onColorChange()
   }
 
-  const checkStepCountRange = () => {
-    if (stepsCount >= colorInstances.length && stepsCount <= 50) {
-      updateQuery('steps', stepsCount.toString())
-    } else {
-      stepsCount =
-        Math.abs(colorInstances.length - stepsCount) < Math.abs(50 - stepsCount)
-          ? colorInstances.length
-          : 50
+  const decreaseStepCount = () => {
+    if (stepsCount > colorInstances.length) {
+      stepsCount--
     }
   }
+  const increaseStepCount = () => {
+    if (stepsCount < 50) {
+      stepsCount++
+    }
+  }
+
+  const maxStepCount = 50
+  const debounceTime = 500
+
+  const checkStepsCountRange = () => {
+    stepsCount = clamp(stepsCount, colorInstances.length, maxStepCount)
+  }
+
+  const debouncedCheckStepsCountRange = debounce(checkStepsCountRange, debounceTime)
 
   const onColorChange = () => {
     updateQuery(
@@ -172,7 +182,7 @@
         <div class="flex items-center">
           <div class="flex justify-between">
             <button
-              on:click={() => stepsCount--}
+              on:click={decreaseStepCount}
               class="transition hover:text-primary-clamped"
             >
               <svg
@@ -200,7 +210,7 @@
               />
             </div>
             <button
-              on:click={() => stepsCount++}
+              on:click={increaseStepCount}
               class="transition hover:text-primary-clamped"
             >
               <svg
