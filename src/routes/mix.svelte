@@ -26,7 +26,7 @@
     Number(getQueryParam('steps', localStorage.getItem('steps'))) || 10
 
   $: if (stepsCount) {
-    updateQuery('steps', stepsCount.toString())
+    checkStepCountRange()
   }
 
   let showStepsAsGradient = getQueryParam('view') === 'gradient'
@@ -80,14 +80,14 @@
     onColorChange()
   }
 
-  const decreaseStepCount = () => {
-    if (stepsCount > colorInstances.length) {
-      stepsCount--
-    }
-  }
-  const increaseStepCount = () => {
-    if (stepsCount < 50) {
-      stepsCount++
+  const checkStepCountRange = () => {
+    if (stepsCount >= colorInstances.length && stepsCount <= 50) {
+      updateQuery('steps', stepsCount.toString())
+    } else {
+      stepsCount =
+        Math.abs(colorInstances.length - stepsCount) < Math.abs(50 - stepsCount)
+          ? colorInstances.length
+          : 50
     }
   }
 
@@ -172,7 +172,7 @@
         <div class="flex items-center">
           <div class="flex justify-between">
             <button
-              on:click={decreaseStepCount}
+              on:click={() => stepsCount--}
               class="transition hover:text-primary-clamped"
             >
               <svg
@@ -200,7 +200,7 @@
               />
             </div>
             <button
-              on:click={increaseStepCount}
+              on:click={() => stepsCount++}
               class="transition hover:text-primary-clamped"
             >
               <svg
