@@ -13,7 +13,7 @@
   import ColorBlock from '$src/components/ColorBlock.svelte'
   import { copyToClipboard } from '$src/utils/clipboard'
   import Slider from '$src/components/Slider.svelte'
-  import { clamp } from 'lodash-es'
+  import { clamp, debounce } from 'lodash-es'
 
   let queryColors = getColorsFromUrl()
 
@@ -27,6 +27,7 @@
 
   $: if (stepsCount) {
     updateQuery('steps', stepsCount.toString())
+    debouncedCheckStepsCountRange()
   }
 
   let showStepsAsGradient = getQueryParam('view') === 'gradient'
@@ -50,7 +51,7 @@
     .scale(colorInstances.map((c) => c.hex()))
     .gamma(gamma)
     .mode(mode)
-    .colors(stepsCount)
+    .colors(clamp(stepsCount, colorInstances.length, maxStepCount))
     .map((c) => new Color(c))
 
   $: averageColor = Color.fromChroma(
@@ -90,6 +91,15 @@
       stepsCount++
     }
   }
+
+  const maxStepCount = 50
+  const debounceTime = 500
+
+  const checkStepsCountRange = () => {
+    stepsCount = clamp(stepsCount, colorInstances.length, maxStepCount)
+  }
+
+  const debouncedCheckStepsCountRange = debounce(checkStepsCountRange, debounceTime)
 
   const onColorChange = () => {
     updateQuery(
