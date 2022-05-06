@@ -51,7 +51,7 @@
     .scale(colorInstances.map((c) => c.hex()))
     .gamma(gamma)
     .mode(mode)
-    .colors(stepsCount)
+    .colors(clamp(stepsCount, colorInstances.length, maxStepCount))
     .map((c) => new Color(c))
 
   $: averageColor = Color.fromChroma(
