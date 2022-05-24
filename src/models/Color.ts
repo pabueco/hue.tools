@@ -1,5 +1,5 @@
-import { ColorInput, mostReadable, RGBA, TinyColor } from '@ctrl/tinycolor'
-import type { ColorFormats } from '@ctrl/tinycolor'
+import { mostReadable, TinyColor } from '@ctrl/tinycolor'
+import type { ColorFormats, ColorInput } from '@ctrl/tinycolor'
 import chroma from 'chroma-js'
 import { uniqueId } from 'lodash-es'
 
