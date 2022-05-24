@@ -1,7 +1,5 @@
 import { goto } from '$app/navigation'
-import { page } from '$app/stores'
 import { Color } from '$src/models/Color'
-import { get } from 'svelte/store'
 
 /**
  * Write a list of colors to the URL.
@@ -11,7 +9,7 @@ export const updateQuery = (key: string, value: string | string[]): void => {
 
   const paramValue = Array.isArray(value) ? value.join(';') : value
 
-  const searchParams = get(page).url.searchParams
+  const searchParams = new URLSearchParams(location.search)
   searchParams.set(key, paramValue.replace(/#/g, ''))
 
   goto('?' + searchParams.toString(), {
