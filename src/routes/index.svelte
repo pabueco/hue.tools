@@ -4,7 +4,6 @@
 
   import { primaryColor } from '$src/store'
   import { copyToClipboard } from '$src/utils/clipboard'
-  // import { slide } from 'svelte/transition';
 
   $primaryColor = Color.random()
 

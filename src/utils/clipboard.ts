@@ -1,4 +1,3 @@
-// import { toast } from '@zerodevx/svelte-toast'
 import { isDarkMode } from '$src/store'
 import { get } from 'svelte/store'
 import { sample } from 'lodash-es'
@@ -16,7 +15,6 @@ export const copyToClipboard = (
   message?: string
 ): void => {
   navigator.clipboard.writeText(String(text)).then(() => {
-    // toast.push(message || `Copied: ${text}`);
     showFloatingTooltip(event, message)
   })
 }
@@ -49,7 +47,6 @@ const showFloatingTooltip = (event: MouseEvent, message = 'Copied!') => {
     el.style.color = '#fff'
   }
 
-  // el.style.boxShadow = 'rgb(0 0 0 / 50%) 0px 3px 2px'
   el.className =
     'rounded-lg px-2 py-1 font-medium text-sm tracking-wide shadow-md'
   el.textContent = message

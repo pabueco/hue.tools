@@ -47,8 +47,6 @@
       color: Color.random().hex(),
       width: 225,
       boxHeight: 180,
-      // padding: 12,
-      // layoutDirection: 'horizontal',
       layout,
     })
 
