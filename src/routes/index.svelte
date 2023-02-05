@@ -18,6 +18,7 @@
 
 <svelte:head>
   <title>hue.tools</title>
+  <meta name="theme-color" content={colorHex} />
 </svelte:head>
 
 <div class="flex-1 flex flex-col items-center justify-center relative">
