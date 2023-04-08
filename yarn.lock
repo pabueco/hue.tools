@@ -24,9 +24,9 @@
     js-tokens "^4.0.0"
 
 "@ctrl/tinycolor@^3.4.0":
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/@ctrl/tinycolor/-/tinycolor-3.4.1.tgz#75b4c27948c81e88ccd3a8902047bcd797f38d32"
-  integrity sha512-ej5oVy6lykXsvieQtqZxCOaLT+xD4+QNarq78cIYISHmZXshCvROLudpQN3lfL8G0NL7plMSSK+zlyvCaIJ4Iw==
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/@ctrl/tinycolor/-/tinycolor-3.6.0.tgz#53fa5fe9c34faee89469e48f91d51a3766108bc8"
+  integrity sha512-/Z3l6pXthq0JvMYdUFyX9j0MaCltlIn6mfh9jLyQwg5aPKxkyNa0PTHtU1AlFXLNk55ZuAeJRcpvq+tmLfKmaQ==
 
 "@esbuild/linux-loong64@0.14.54":
   version "0.14.54"
@@ -1618,9 +1618,9 @@ normalize-url@^6.0.1:
   integrity sha512-DlL+XwOy3NxAQ8xuC0okPgK46iuVNAK01YN7RueYBqqFeGsBjV9XmCAzAdgt+667bCl5kPh9EqKKDwnaPG1I7A==
 
 nouislider@^15.5.0:
-  version "15.6.0"
-  resolved "https://registry.yarnpkg.com/nouislider/-/nouislider-15.6.0.tgz#706b37b8cd485037353dcdb8bb387f9d2704c37c"
-  integrity sha512-YJg+A6RQXTuFqhEwd42FeRaEGMGgDSSNnpIyVtT8XJrNl4VBEUkPI6Yj91bT3JjJIvNYi4VdppWeCV+z2gOnnw==
+  version "15.7.0"
+  resolved "https://registry.yarnpkg.com/nouislider/-/nouislider-15.7.0.tgz#3d8ec43c6f767ceb7f17afc555016ef907cedc3d"
+  integrity sha512-aJVEULBPOUwq32/s7xnLNyLvo4kuzYJJsNp2PNGW932AQ0uuDAbLShAqswtxRzJc5n/dLJXNlYSLOZ57bcUg1w==
 
 nth-check@^2.0.1:
   version "2.1.1"
@@ -2421,7 +2421,7 @@ v8-compile-cache@^2.0.3:
   resolved "https://registry.yarnpkg.com/v8-compile-cache/-/v8-compile-cache-2.3.0.tgz#2de19618c66dc247dcfb6f99338035d8245a2cee"
   integrity sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==
 
-vite@^2.9.9:
+vite@^2.9.15, vite@^2.9.9:
   version "2.9.15"
   resolved "https://registry.yarnpkg.com/vite/-/vite-2.9.15.tgz#2858dd5b2be26aa394a283e62324281892546f0b"
   integrity sha512-fzMt2jK4vQ3yK56te3Kqpkaeq9DkcZfBbzHwYpobasvgYmP2SoAr6Aic05CsB4CzCZbsDv4sujX3pkEGhLabVQ==
