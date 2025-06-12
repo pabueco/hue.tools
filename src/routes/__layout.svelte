@@ -69,7 +69,7 @@
     <script
       defer
       data-domain="hue.tools"
-      src="https://plausible.io/js/plausible.js"></script>
+      src="https://reasonable.pabue.workers.dev/js/script.js"></script>
   {/if}
 </svelte:head>
 
